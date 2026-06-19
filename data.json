@@ -1,0 +1,201 @@
+{
+  "theme": {
+    "paper": "#f1f1ec",
+    "stone": "#e3e4dc",
+    "ink": "#14161b",
+    "inkSoft": "#23262c",
+    "accent": "#2b3ff2",
+    "accentDeep": "#1d2bc0",
+    "accentLite": "#7c89ff",
+    "muted": "#6b6f78",
+    "line": "rgba(20,22,27,0.14)",
+    "linePaper": "rgba(241,241,236,0.16)",
+    "geoColor": "#14161b"
+  },
+  "meta": {
+    "title": "Kuan Zhe Huang (ZEN) - Creative Full Stack Developer, Puchong",
+    "description": "Kuan Zhe Huang (ZEN) is a Creative Full Stack Developer based in Puchong, Selangor - building end-to-end products where engineering meets art direction. Specialising in Angular, React, Unity, 3D & VFX.",
+    "ogTitle": "Kuan Zhe Huang (ZEN) - Creative Full Stack Developer",
+    "ogDescription": "End-to-end builds where engineering meets art direction. Based in Puchong, open to any opportunity."
+  },
+  "global": {
+    "availability": "AVAILABLE FOR Q3 '26",
+    "email": "coffeeinveins@gmail.com",
+    "location": "3.0220\u00b0 N, 101.6250\u00b0 E",
+    "timezone": "MYT",
+    "timezoneIANA": "Asia/Kuala_Lumpur"
+  },
+  "nav": {
+    "logo": "ZEN",
+    "links": [
+      { "label": "Work", "href": "#work" },
+      { "label": "About", "href": "#about" },
+      { "label": "Services", "href": "#services" },
+      { "label": "Contact", "href": "#contact" }
+    ],
+    "cta": { "label": "Let's talk", "href": "#contact" }
+  },
+  "sections": {
+    "hero": { "id": "top", "navTheme": "dark" },
+    "band": { "id": "", "navTheme": "dark" },
+    "case": { "id": "work", "navTheme": "light" },
+    "works": { "id": "", "navTheme": "dark" },
+    "about": { "id": "about", "navTheme": "dark" },
+    "services": { "id": "services", "navTheme": "dark" },
+    "contact": { "id": "contact", "navTheme": "light" },
+    "footer": { "id": "", "navTheme": "dark" }
+  },
+  "hero": {
+    "eyebrow": "PORTFOLIO \u00a9 2026\u2002\u00b7\u2002CREATIVE FULL STACK DEVELOPER\u2002\u00b7\u2002PUCHONG, SELANGOR",
+    "nameLine1": "ZEN",
+    "nameLine2": "KUAN",
+    "tag": "End-to-end builds where engineering meets art direction - from Puchong to anywhere.",
+    "ctaPrimary": { "label": "Get in touch", "href": "#contact" },
+    "ctaSecondary": { "label": "Featured work", "href": "#work" },
+    "scrollText": "SCROLL"
+  },
+  "bandText": "FULL STACK \u25c6 GAME DEV \u25c6 3D & VFX \u25c6 UNITY \u25c6 ANGULAR \u25c6 REACT \u25c6 GLSL \u25c6 BLENDER \u25c6",
+  "caseStudy": {
+    "id": "my-home-servicer",
+    "sectionLabel": "(01) - FEATURED CASE STUDY",
+    "titleLine1": "My Home",
+    "titleLine2": "Servicer",
+    "subtitle": "Malaysia's friendly way to book trusted home pros.",
+    "description": "A full-stack marketplace connecting Malaysian homeowners with vetted servicers across <strong>25+ categories</strong> - built with Angular and Express.js. I engineered the platform end-to-end: REST APIs, real-time order tracking, an AI help assistant, and a quote-to-payment flow across 7 service verticals.",
+    "points": [
+      "Quote \u2192 booking \u2192 payment in one continuous flow",
+      "Live order tracking across six status states",
+      "AI Help Assistant for quotes, bookings & reorders",
+      "7 verticals - cleaning, repair, maintenance, improvement, training, events, tech"
+    ],
+    "meta": {
+      "role": "Full Stack Developer",
+      "scope": "Angular \u00b7 Express.js \u00b7 REST API",
+      "platform": "Responsive web app",
+      "year": "2025 \u2013 26"
+    },
+    "cta": {
+      "label": "Explore the live product",
+      "url": "https://myhomeservicer.pages.dev"
+    },
+    "gallery": [],
+    "mockupBrowser": "img/mhs-browser.png",
+    "mockupPhone": "img/mhs-phone.png",
+    "stats": [
+      { "value": 25, "label": "+ service categories" },
+      { "value": 7, "label": "service verticals" },
+      { "value": 6, "label": "order status states" },
+      { "value": 1, "label": "seamless quote-to-pay flow" }
+    ]
+  },
+  "works": {
+    "sectionLabel": "(02) - SELECTED WORKS",
+    "items": [
+      {
+        "id": "co-bug-dump",
+        "title": "Co-Bug Dump",
+        "year": "2025",
+        "tags": "OFFLINE TOOL \u00b7 AI \u00b7 BUG TRACKER",
+        "thumbStyle": "thumb-kopi",
+        "thumbInitials": "CB",
+        "url": "https://github.com/AllergicToAnything",
+        "gallery": [],
+        "description": "Offline-first AI bug tracker built as a developer tool. Search, categorize, and resolve bugs without an internet connection.",
+        "liveUrl": "https://github.com/AllergicToAnything"
+      },
+      {
+        "id": "ssg-resume",
+        "title": "SSG Resume Template",
+        "year": "2026",
+        "tags": "STATIC SITE \u00b7 OPEN SOURCE \u00b7 TEMPLATE",
+        "thumbStyle": "thumb-sewa",
+        "thumbInitials": "SR",
+        "url": "https://github.com/AllergicToAnything",
+        "gallery": [],
+        "description": "Static site generator resume template. Fast, customizable, deploy anywhere. Zero build step, pure HTML/CSS/JS.",
+        "liveUrl": "https://github.com/AllergicToAnything"
+      }
+    ]
+  },
+  "about": {
+    "sectionLabel": "(03) - ABOUT",
+    "portrait": "img/zen-portrait-transparent.png",
+    "titleLines": [
+      "Apa khabar! I'm ZEN -",
+      "I build things where",
+      "code meets craft."
+    ],
+    "bio": "Six years across game studios and startups taught me one thing: the best products live at the intersection of engineering and art. From AAA 3D environments to full-stack marketplaces, I bring VFX precision to code - sweating the architecture, the shaders, the micro-interactions - the <em>rasa</em> of a product.",
+    "portraitCaption": "ZEN - PUCHONG, MY",
+    "stats": [
+      { "value": 6, "label": "years in the industry" },
+      { "value": 8, "label": "shipped projects" },
+      { "value": 5, "label": "languages spoken" },
+      { "value": "\u221e", "label": "coffees in veins" }
+    ]
+  },
+  "services": {
+    "sectionLabel": "(04) - WHAT I DO",
+    "rows": [
+      {
+        "idx": "01",
+        "title": "Full Stack Development",
+        "tags": "ANGULAR \u00b7 REACT \u00b7 NODE.JS \u00b7 TYPESCRIPT",
+        "behavior": "detail",
+        "gallery": [],
+        "description": "End-to-end web applications - from database schema to deployment. I build products that ship.",
+        "liveUrl": ""
+      },
+      {
+        "idx": "02",
+        "title": "Game Development",
+        "tags": "UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 GAMEPLAY SYSTEMS",
+        "behavior": "detail",
+        "gallery": [],
+        "description": "AAA gameplay systems, editor tools, and real-time 3D experiences.",
+        "liveUrl": ""
+      },
+      {
+        "idx": "03",
+        "title": "3D &amp; VFX",
+        "tags": "BLENDER \u00b7 3DS MAX \u00b7 GLSL \u00b7 HLSL \u00b7 SUBSTANCE",
+        "behavior": "external",
+        "url": "https://kze.artstation.com",
+        "targetBlank": true
+      },
+      {
+        "idx": "04",
+        "title": "Tool Creation &amp; Automation",
+        "tags": "PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
+        "behavior": "detail",
+        "gallery": [],
+        "description": "Custom tools that accelerate workflows and eliminate repetitive tasks.",
+        "liveUrl": ""
+      }
+    ]
+  },
+  "contact": {
+    "sectionLabel": "(05) - CONTACT",
+    "kicker": "Have a project in mind?",
+    "cta": "LET'S TALK",
+    "email": "coffeeinveins@gmail.com",
+    "availability": "Available Q3 '26",
+    "socials": [
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/zenkuan/" },
+      { "label": "GitHub", "url": "https://github.com/AllergicToAnything" },
+      { "label": "ArtStation", "url": "https://kze.artstation.com" },
+      { "label": "Instagram", "url": "https://www.instagram.com/zen.k.z/" }
+    ],
+    "formspree": {
+      "formId": "mjgdnrrz",
+      "endpoint": "https://formspree.io/f/mjgdnrrz",
+      "subjectTemplate": "Portfolio inquiry from {email}",
+      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}"
+    }
+  },
+  "footer": {
+    "outline": "ZEN KUAN",
+    "copyright": "\u00a9 2026 Kuan Zhe Huang",
+    "madeIn": "Designed & built in Puchong"
+  }
+}

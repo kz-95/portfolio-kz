@@ -1,0 +1,162 @@
+/* service-detail.js - Service row gallery expansion for behavior:detail rows */
+document.addEventListener('dom:ready', function () {
+  const expanded = document.querySelector('.service-expanded');
+  if (!expanded) return;
+
+  const inner = expanded.querySelector('.service-expanded__inner');
+  let activeId  = null;
+  let capturedScrollY = 0;
+  let lenisRef = null;
+
+  function getLenis() {
+    if (lenisRef) return lenisRef;
+    if (window.__lenis) lenisRef = window.__lenis;
+    return lenisRef;
+  }
+
+  function getServiceData(idx) {
+    const d = window.__data;
+    if (!d || !d.services || !d.services.rows) return null;
+    return d.services.rows.find(r => r.idx === idx) || null;
+  }
+
+  function buildContent(svc) {
+    if (!svc) return '';
+    const hasGallery = svc.gallery && svc.gallery.length > 0;
+    const galleryHTML = hasGallery
+      ? svc.gallery.map(src => `<img src="${esc(src)}" alt="${esc(svc.title)}" loading="lazy">`).join('')
+      : `<div class="service-expanded__placeholder"><span>${esc(svc.idx)}</span></div>`;
+
+    const liveBtn = svc.liveUrl
+      ? `<a class="service-expanded__live btn-pill btn-pill--solid" href="${esc(svc.liveUrl)}" target="_blank" rel="noopener">Visit live site <span class="btn-pill__arrow">\u2197</span></a>`
+      : '';
+
+    return `
+      <div class="service-expanded__gallery">${galleryHTML}</div>
+      <div class="service-expanded__info">
+        <h2>${esc(svc.title)}</h2>
+        <p class="service-expanded__tags mono">${esc(svc.tags)}</p>
+        <p class="service-expanded__desc">${esc(svc.description)}</p>
+        ${liveBtn}
+      </div>`;
+  }
+
+  function open(triggerEl) {
+    const idx = triggerEl?.dataset?.serviceId;
+    if (!idx || activeId === idx) return;
+    activeId = idx;
+    const svc = getServiceData(idx);
+    if (!svc) return;
+
+    const lenis = getLenis();
+    if (lenis) {
+      capturedScrollY = window.scrollY;
+      lenis.stop();
+      document.documentElement.style.transform = '';
+    }
+
+    inner.innerHTML = buildContent(svc);
+
+    expanded.style.display = 'block';
+    expanded.removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined') {
+      const stateFrom = Flip.getState(triggerEl);
+      triggerEl.style.visibility = 'hidden';
+      const stateTo = Flip.getState(inner, { props: 'borderRadius,padding' });
+      triggerEl.style.visibility = '';
+
+      Flip.from(stateFrom, {
+        targets: inner,
+        duration: 0.5,
+        ease: 'power3.inOut',
+        absolute: true,
+        onStart() { inner.style.opacity = '1'; }
+      });
+
+      gsap.fromTo('.service-expanded__info',
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: 0.3, delay: 0.25 }
+      );
+    }
+
+    ensureCloseButton();
+  }
+
+  function close() {
+    if (!activeId) return;
+    const triggerEl = document.querySelector(`[data-service-id="${activeId}"]`);
+
+    function finish() {
+      inner.innerHTML = '';
+      expanded.style.display = 'none';
+      expanded.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      activeId = null;
+
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.start();
+        lenis.scrollTo(capturedScrollY, { immediate: true });
+      }
+    }
+
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && triggerEl) {
+      gsap.set('.service-expanded__info', { clearProps: 'all' });
+      const stateTo = Flip.getState(triggerEl);
+      Flip.from(stateTo, {
+        targets: inner,
+        duration: 0.4,
+        ease: 'power3.in',
+        absolute: true,
+        onComplete: finish
+      });
+    } else {
+      finish();
+    }
+  }
+
+  function ensureCloseButton() {
+    if (document.querySelector('.service-expanded__close')) return;
+    const btn = document.createElement('button');
+    btn.className = 'service-expanded__close';
+    btn.setAttribute('aria-label', 'Close');
+    btn.innerHTML = '&times;';
+    btn.addEventListener('click', (e) => { e.stopPropagation(); close(); });
+    expanded.appendChild(btn);
+  }
+
+  /* Click handlers */
+  document.addEventListener('click', (e) => {
+    /* External service rows */
+    const extRow = e.target.closest('[data-service-external]');
+    if (extRow) {
+      e.preventDefault();
+      const url = extRow.dataset.serviceExternal;
+      const target = extRow.dataset.serviceTarget || '_blank';
+      if (url) window.open(url, target);
+      return;
+    }
+
+    /* Detail service rows */
+    const row = e.target.closest('[data-service-id]');
+    if (row && !row.closest('.service-expanded')) {
+      e.preventDefault();
+      open(row);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && activeId) close();
+  });
+
+  window.__serviceDetail = { open, close };
+
+  function esc(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+});
