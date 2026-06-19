@@ -1,0 +1,17 @@
+# Claude / tooling
+.claude/
+.gstack/
+tools/
+chat-export.md
+run.bat
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Node (if ever added)
+node_modules/
