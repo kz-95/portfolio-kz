@@ -69,6 +69,48 @@ All personal content lives in `index.html`. Key variables in `css/style.css`:
 --c-accent: #2b3ff2;   /* electric cobalt */
 ```
 
+## Deploy
+
+This is a static site with **no build step**. Both hosts auto-deploy on every push to `main`.
+
+### Cloudflare Pages
+
+1. Go to [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
+2. Authorise GitHub and pick the `kz-95/site02` repo.
+3. Build settings:
+
+   | Setting | Value |
+   |---|---|
+   | Framework preset | `None` |
+   | Build command | *(leave empty)* |
+   | Build output directory | `/` |
+
+4. **Save and Deploy**. Site goes live at `https://<project>.pages.dev`.
+
+> Already live at [zen-resume.pages.dev](https://zen-resume.pages.dev).
+
+**CLI alternative** (Wrangler):
+
+```sh
+npm install -g wrangler
+wrangler login
+wrangler pages deploy . --project-name=site02
+```
+
+### Vercel
+
+1. Go to [Vercel dashboard](https://vercel.com/new) → **Import Git Repository** → select `kz-95/site02`.
+2. Framework Preset: **Other**. Leave Build Command empty, Output Directory `.`.
+3. **Deploy**. Live at `https://<project>.vercel.app`.
+
+**CLI alternative:**
+
+```sh
+npm install -g vercel
+vercel        # preview deploy
+vercel --prod # production deploy
+```
+
 ## Features
 
 - WebGL doorway arch (three.js fbm flow-field shader, mouse-reactive + scroll-parallaxed)
