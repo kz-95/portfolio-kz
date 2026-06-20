@@ -61,12 +61,10 @@
     "titleLine1": "My Home",
     "titleLine2": "Servicer",
     "subtitle": "Connecting freelance home pros with the tenants who need them.",
-    "description": "Malaysian homeowners needed trusted help. Freelance servicers needed steady work. My Home Servicer bridges both sides with a marketplace that makes booking a home pro as simple as ordering a ride.",
+    "description": "Malaysian homeowners needed <strong>trusted help</strong>. Freelance servicers needed <strong>steady work</strong>. My Home Servicer bridges both sides with a marketplace that makes booking a home pro as simple as ordering a ride.",
     "points": [
-      "Two-sided marketplace connecting freelance servicers with tenants needing trusted help, built with Angular and Express.js",
-      "Gated role architecture across guest, customer, servicer, and admin portals with route guards and JWT middleware",
-      "Quote-to-payment in one continuous flow with real-time order tracking across six status states, escrow-backed REST API",
-      "30+ categories across 7 verticals spanning cleaning, repair, maintenance, improvement, training, events, and tech"
+      "Two-sided marketplace connecting freelance servicers with tenants needing trusted help, built with Angular and Express.js. Gated role architecture across guest, customer, servicer, and admin portals, each secured with route guards and JWT middleware authority layers on both frontend and backend.",
+      "Quote-to-payment in one continuous flow with real-time order tracking across six status states, backed by an escrow-aware REST API. 30+ categories spanning 7 verticals from cleaning and repair to tech support, all wrapped in a responsive interface that scales from mobile to desktop."
     ],
     "meta": {
       "role": "Full Stack Developer",
