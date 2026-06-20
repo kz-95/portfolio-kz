@@ -1454,7 +1454,9 @@ em {
 .contact-modal__server-error {
   color: #c95a3c;
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  font-style: italic;
 }
 
 /* ── work expanded (card-to-modal) ──────────────────────── */
