@@ -183,7 +183,11 @@ document.addEventListener('dom:ready', function () {
     setLoading(true);
     try {
       const fd = new FormData(form);
-      const resp = await fetch(endpoint, { method: 'POST', body: fd });
+      const resp = await fetch(endpoint, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' }
+      });
       if (resp.ok) {
         if (successEl) successEl.hidden = false;
         form.style.display = 'none';
