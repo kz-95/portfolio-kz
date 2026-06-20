@@ -396,7 +396,7 @@ function renderHiddenContainers() {
         <h2 class="contact-modal__title">Let's talk</h2>
         <form class="contact-modal__form" novalidate>
           <div class="contact-modal__field">
-            <label class="mono" for="cm-email">Email</label>
+            <label class="mono" for="cm-email">Email <span class="required">*</span></label>
             <input type="email" id="cm-email" placeholder="you@example.com" required autocomplete="email">
             <span class="contact-modal__error"></span>
           </div>

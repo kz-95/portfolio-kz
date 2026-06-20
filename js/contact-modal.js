@@ -122,17 +122,19 @@ document.addEventListener('dom:ready', function () {
 
   /* auto-fill on blur AND input for real-time feedback */
   function handleEmailChange() {
-    const inp = emailInp || document.getElementById('cm-email');
+    const inp = document.getElementById('cm-email');
     if (!inp) return;
     const email = inp.value.trim();
+    const field = inp.closest('.contact-modal__field');
     if (errEl) errEl.textContent = '';
     if (!email) return;
     if (!validateEmail(email)) {
       if (errEl) errEl.textContent = 'Please enter a valid email address';
-      const subj = subjectInp || document.getElementById('cm-subject');
-      const body = bodyTxt || document.getElementById('cm-body');
-      if (subj) subj.value = '';
-      if (body) body.value = '';
+      if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
+      const subj = document.getElementById('cm-subject');
+      const body = document.getElementById('cm-body');
+      if (subj) subj.value = 'Type your email above to auto-fill';
+      if (body) body.value = 'Type your email above to auto-fill';
     } else {
       autoFill(email);
     }
@@ -147,10 +149,13 @@ document.addEventListener('dom:ready', function () {
   /* submit */
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const em = emailInp || document.getElementById('cm-email');
+    const em = document.getElementById('cm-email');
+    const field = em?.closest('.contact-modal__field');
     const email = em?.value.trim();
     if (!email || !validateEmail(email)) {
       if (errEl) errEl.textContent = 'Please enter a valid email address';
+      if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
+      em?.focus();
       return;
     }
     if (errEl) errEl.textContent = '';
