@@ -194,9 +194,12 @@ function renderCaseStudy(cs) {
   /* stats */
   const stats = caseEl.querySelector(S.caseStats);
   if (stats && cs.stats) {
-    stats.innerHTML = cs.stats.map(s =>
-      `<div class="stat reveal-up"><b data-count="${s.value}">0</b><span>${esc(s.label)}</span></div>`
-    ).join('');
+    stats.innerHTML = cs.stats.map(s => {
+      if (typeof s.value === 'string') {
+        return `<div class="stat reveal-up"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`;
+      }
+      return `<div class="stat reveal-up"><b data-count="${s.value}">0</b><span>${esc(s.label)}</span></div>`;
+    }).join('');
   }
 
   /* gallery */

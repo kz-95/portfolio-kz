@@ -80,9 +80,9 @@
     "mockupBrowser": "img/mhs-browser.png",
     "mockupPhone": "img/mhs-phone.png",
     "stats": [
+      { "value": "30+", "label": "service categories" },
+      { "value": "7+", "label": "service verticals" },
       { "value": 4, "label": "gated role layers" },
-      { "value": 30, "label": "+ service categories" },
-      { "value": 7, "label": "service verticals" },
       { "value": 1, "label": "seamless quote-to-pay flow" }
     ]
   },
