@@ -402,11 +402,11 @@ function renderHiddenContainers() {
           </div>
           <div class="contact-modal__field">
             <label class="mono" for="cm-subject">Subject</label>
-            <input type="text" id="cm-subject">
+            <input type="text" id="cm-subject" hidden>
           </div>
           <div class="contact-modal__field">
             <label class="mono" for="cm-body">Message</label>
-            <textarea id="cm-body" rows="5"></textarea>
+            <textarea id="cm-body" rows="5" hidden></textarea>
           </div>
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <button type="submit" class="contact-modal__submit btn-pill btn-pill--solid">

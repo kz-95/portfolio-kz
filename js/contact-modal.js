@@ -48,14 +48,8 @@ document.addEventListener('dom:ready', function () {
       gsap.to(panel, { scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out', delay: 0.05 });
     }
 
-    /* Reset + pre-fill from data.json templates as hints */
+    /* Reset */
     resetForm();
-    const d = window.__data;
-    const fs = d?.contact?.formspree;
-    const subj = document.getElementById('cm-subject');
-    const body = document.getElementById('cm-body');
-    if (subj) subj.value = fs?.hintSubject || fs?.subjectTemplate || '';
-    if (body) body.value = fs?.hintBody || fs?.bodyTemplate || '';
     const em = document.getElementById('cm-email');
     em?.focus();
   }
@@ -132,12 +126,6 @@ document.addEventListener('dom:ready', function () {
     if (!validateEmail(email)) {
       if (errEl) errEl.textContent = 'Please enter a valid email address';
       if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
-      const d = window.__data;
-      const fs = d?.contact?.formspree;
-      const subj = document.getElementById('cm-subject');
-      const body = document.getElementById('cm-body');
-      if (subj) subj.value = fs?.hintSubject || fs?.subjectTemplate || '';
-      if (body) body.value = fs?.hintBody || fs?.bodyTemplate || '';
     } else {
       autoFill(email);
     }
