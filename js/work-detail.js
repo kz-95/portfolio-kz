@@ -16,31 +16,58 @@ document.addEventListener('dom:ready', function () {
 
   function getWorkData(id) {
     const d = window.__data;
-    if (!d || !d.works || !d.works.items) return null;
-    return d.works.items.find(w => w.id === id) || null;
+    if (!d) return null;
+    if (d.works && d.works.items) {
+      const w = d.works.items.find(w => w.id === id);
+      if (w) return w;
+    }
+    /* featured case study (section 01) opens through the same overlay carousel */
+    if (d.caseStudy && d.caseStudy.id === id) {
+      const c = d.caseStudy;
+      return {
+        id: c.id,
+        title: `${c.titleLine1 || ''} ${c.titleLine2 || ''}`.trim(),
+        year: (c.meta && c.meta.year) || '',
+        tags: (c.meta && c.meta.scope) || '',
+        thumbStyle: 'thumb-invoice',
+        thumbInitials: 'MHS',
+        gallery: c.gallery || [],
+        description: c.subtitle || '',
+        liveUrl: (c.cta && c.cta.url) || ''
+      };
+    }
+    return null;
   }
 
   function buildContent(w) {
     if (!w) return '';
     const hasGallery = w.gallery && w.gallery.length > 0;
-    const galleryHTML = hasGallery
-      ? w.gallery.map(src =>
-          `<img src="${esc(src)}" alt="${esc(w.title)} screenshot" loading="lazy">`
-        ).join('')
-      : `<div class="work-expanded__placeholder ${esc(w.thumbStyle)}"><span>${esc(w.thumbInitials)}</span></div>`;
+    const arrows = hasGallery && w.gallery.length > 1
+      ? `<button class="carousel__btn carousel__btn--prev" data-carousel-prev aria-label="Previous image">‹</button>
+         <button class="carousel__btn carousel__btn--next" data-carousel-next aria-label="Next image">›</button>`
+      : '';
+    const mediaHTML = hasGallery
+      ? `<div class="work-expanded__carousel">
+           <div class="work-expanded__gallery" data-carousel-track>${
+             w.gallery.map(src => `<img src="${esc(src)}" alt="${esc(w.title)} preview" loading="lazy">`).join('')
+           }</div>${arrows}</div>`
+      : `<div class="work-expanded__carousel">
+           <div class="work-expanded__placeholder ${esc(w.thumbStyle)}"><span>${esc(w.thumbInitials)}</span></div>
+         </div>`;
 
     const liveBtn = w.liveUrl
-      ? `<a class="work-expanded__live btn-pill btn-pill--solid" href="${esc(w.liveUrl)}" target="_blank" rel="noopener">Visit live site <span class="btn-pill__arrow">\u2197</span></a>`
+      ? `<a class="work-expanded__live" href="${esc(w.liveUrl)}" target="_blank" rel="noopener">Visit live site <span class="work-expanded__live-arrow" aria-hidden="true">\u2192</span></a>`
       : '';
 
     return `
-      <div class="work-expanded__gallery">${galleryHTML}</div>
-      <div class="work-expanded__info">
-        <div class="work-expanded__meta">
-          <h2>${esc(w.title)}</h2>
-          <span class="mono">${esc(w.year)}</span>
-          <p class="work-expanded__tags mono">${esc(w.tags)}</p>
-        </div>
+      <div class="work-expanded__header">
+        <h2 class="work-expanded__title">${esc(w.title)}</h2>
+        <span class="work-expanded__year mono">${esc(w.year)}</span>
+        <p class="work-expanded__tags mono">${esc(w.tags)}</p>
+      </div>
+      <div class="work-expanded__sep"></div>
+      ${mediaHTML}
+      <div class="work-expanded__desc-row">
         <p class="work-expanded__desc">${esc(w.description)}</p>
         ${liveBtn}
       </div>`;
@@ -76,15 +103,20 @@ document.addEventListener('dom:ready', function () {
     }
 
     /* Build content */
-    inner.innerHTML = buildContent(w) + buildOtherCards(id);
+    inner.innerHTML = buildContent(w) + '<div class="work-expanded__sep"></div>' + buildOtherCards(id);
 
     /* Position expanded overlay */
     expanded.style.display = 'block';
     expanded.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     /* GSAP Flip animation */
-    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined') {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && !reduce) {
+      /* fade the overlay backdrop in so the card morph reads cleanly */
+      gsap.fromTo(expanded, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out' });
+
       const stateFrom = Flip.getState(triggerEl);
       /* swap trigger visibility for state collection */
       triggerEl.style.visibility = 'hidden';
@@ -101,8 +133,8 @@ document.addEventListener('dom:ready', function () {
         }
       });
 
-      /* Fade in other cards after flip */
-      gsap.fromTo('.work-expanded__others, .work-expanded__info', 
+      /* Fade in body + other cards after flip */
+      gsap.fromTo('.work-expanded__desc-row, .work-expanded__others',
         { autoAlpha: 0, y: 20 },
         { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.08, delay: 0.3 }
       );
@@ -110,17 +142,23 @@ document.addEventListener('dom:ready', function () {
 
     /* close button */
     ensureCloseButton();
+
+    /* sync URL */
+    window.__route && window.__route.push('/work/' + encodeURIComponent(id));
   }
 
   function close() {
     if (!activeId) return;
+    window.__route && window.__route.home();
     const triggerEl = document.querySelector(`[data-work-id="${activeId}"]`);
     
     function finish() {
       inner.innerHTML = '';
       expanded.style.display = 'none';
+      expanded.style.opacity = '';
       expanded.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       activeId = null;
 
       const lenis = getLenis();
@@ -130,8 +168,10 @@ document.addEventListener('dom:ready', function () {
       }
     }
 
-    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && triggerEl) {
-      gsap.set('.work-expanded__others, .work-expanded__info', { clearProps: 'all' });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && triggerEl && !reduce) {
+      gsap.set('.work-expanded__desc-row, .work-expanded__others', { clearProps: 'all' });
+      gsap.to(expanded, { opacity: 0, duration: 0.32, ease: 'power2.in' });
       const stateTo = Flip.getState(triggerEl);
       Flip.from(stateTo, {
         targets: inner,
@@ -174,6 +214,18 @@ document.addEventListener('dom:ready', function () {
   /* Escape to close */
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && activeId) close();
+  });
+
+  /* Carousel arrows (works for work + service detail overlays) */
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-carousel-prev], [data-carousel-next]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const track = btn.parentElement.querySelector('[data-carousel-track]');
+    if (!track) return;
+    const dir = btn.hasAttribute('data-carousel-next') ? 1 : -1;
+    track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
   });
 
   window.__workDetail = { open, close };

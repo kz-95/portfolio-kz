@@ -20,21 +20,38 @@ document.addEventListener('data:ready', (e) => {
   document.dispatchEvent(new CustomEvent('dom:ready'));
 });
 
-/* theme CSS custom properties */
+/* theme CSS custom properties (day + night driven by data.json) */
+const THEME_VARS = {
+  paper: '--paper', stone: '--stone', ink: '--ink', inkSoft: '--ink-soft',
+  accent: '--accent', accentDeep: '--accent-deep', accentLite: '--accent-lite',
+  muted: '--muted', line: '--line', linePaper: '--line-paper', geoColor: '--geo-color',
+  onAccent: '--on-accent',
+};
+
 function setTheme(t) {
   if (!t) return;
+  /* back-compat: a flat object (no day/night) is treated as the day palette */
+  const day = t.day || t;
+  const night = t.night || null;
+
   const root = document.documentElement.style;
-  if (t.paper)      root.setProperty('--paper', t.paper);
-  if (t.stone)      root.setProperty('--stone', t.stone);
-  if (t.ink)        root.setProperty('--ink', t.ink);
-  if (t.inkSoft)    root.setProperty('--ink-soft', t.inkSoft);
-  if (t.accent)     root.setProperty('--accent', t.accent);
-  if (t.accentDeep) root.setProperty('--accent-deep', t.accentDeep);
-  if (t.accentLite) root.setProperty('--accent-lite', t.accentLite);
-  if (t.muted)      root.setProperty('--muted', t.muted);
-  if (t.line)       root.setProperty('--line', t.line);
-  if (t.linePaper)  root.setProperty('--line-paper', t.linePaper);
-  if (t.geoColor)   root.setProperty('--geo-color', t.geoColor);
+  for (const [key, cssVar] of Object.entries(THEME_VARS)) {
+    if (day[key]) root.setProperty(cssVar, day[key]);
+  }
+
+  if (night) {
+    const decls = Object.entries(THEME_VARS)
+      .filter(([key]) => night[key])
+      .map(([key, cssVar]) => `${cssVar}:${night[key]}`)
+      .join(';');
+    let el = document.getElementById('theme-night');
+    if (!el) {
+      el = document.createElement('style');
+      el.id = 'theme-night';
+      document.head.appendChild(el);
+    }
+    el.textContent = `body.dark{${decls}}`;
+  }
 }
 
 /* meta tags */
@@ -168,9 +185,8 @@ function renderCaseStudy(cs) {
   /* points */
   const points = caseEl.querySelector(S.casePoints);
   if (points && cs.points) {
-    points.innerHTML = cs.points.map((p, i) =>
-      `<li class="reveal-up"><span class="mono">\u2460</span> ${esc(p)}</li>`
-        .replace('\u2460', ['\u2460','\u2461','\u2462','\u2463'][i] || '\u2460')
+    points.innerHTML = cs.points.map((p) =>
+      `<li class="reveal-up"><span class="mono">\u25b8</span> ${esc(p)}</li>`
     ).join('');
   }
 
@@ -198,20 +214,15 @@ function renderCaseStudy(cs) {
       if (typeof s.value === 'string') {
         return `<div class="stat reveal-up"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`;
       }
-      return `<div class="stat reveal-up"><b data-count="${s.value}">0</b><span>${esc(s.label)}</span></div>`;
+      const suffix = s.suffix ? ` data-suffix="${esc(s.suffix)}"` : '';
+      return `<div class="stat reveal-up"><b data-count="${s.value}"${suffix}>0</b><span>${esc(s.label)}</span></div>`;
     }).join('');
   }
 
-  /* gallery */
+  /* main-page case gallery intentionally not rendered;
+     cs.gallery is shown only inside the click-through detail carousel */
   const gallery = caseEl.querySelector('.case__gallery');
-  if (gallery && cs.gallery && cs.gallery.length > 0) {
-    gallery.innerHTML = cs.gallery.map(src =>
-      `<img src="${src}" alt="Case study screenshot" loading="lazy">`
-    ).join('');
-    gallery.style.display = 'grid';
-  } else if (gallery) {
-    gallery.style.display = 'none';
-  }
+  if (gallery) gallery.style.display = 'none';
 
   /* mockup images */
   const browserImg = caseEl.querySelector('.mhs-browser__img');
@@ -263,11 +274,22 @@ function renderAbout(a) {
   if (portraitArt && a.portrait) {
     portraitArt.style.backgroundImage = `url(${a.portrait})`;
     portraitArt.style.backgroundSize = 'cover';
-    portraitArt.style.backgroundPosition = 'center';
+    portraitArt.style.backgroundPosition = a.portraitPosition || 'center 20%';
   }
 
   const caption = about.querySelector(`${S.aboutPortrait} .mono`);
   if (caption) caption.textContent = a.portraitCaption;
+
+  const resume = about.querySelector('.about__resume');
+  if (resume) {
+    if (a.resume) {
+      resume.href = a.resume;
+      resume.textContent = a.resumeLabel || 'View résumé';
+      resume.hidden = false;
+    } else {
+      resume.remove();
+    }
+  }
 
   const stats = about.querySelector(S.aboutStats);
   if (stats && a.stats) {
@@ -389,6 +411,8 @@ function renderHiddenContainers() {
     const el = document.createElement('div');
     el.className = 'contact-modal';
     el.setAttribute('aria-hidden', 'true');
+    const waMsg = "Hi Zen! I came across your portfolio website https://kz-95.vercel.app/ and I'm interested in hiring you.";
+    const waHref = `https://wa.me/60182862739?text=${encodeURIComponent(waMsg)}`;
     el.innerHTML = `
       <div class="contact-modal__backdrop"></div>
       <div class="contact-modal__panel">
@@ -396,13 +420,22 @@ function renderHiddenContainers() {
         <h2 class="contact-modal__title">Let's talk</h2>
         <form class="contact-modal__form" novalidate>
           <div class="contact-modal__field">
-            <label class="mono" for="cm-email">Email <span class="required">*</span></label>
-            <input type="email" id="cm-email" placeholder="you@example.com" required autocomplete="email">
-            <span class="contact-modal__error"></span>
+            <label class="mono" for="cm-name">Name <span class="required">*</span></label>
+            <input type="text" id="cm-name" name="name" placeholder="Your name" required autocomplete="name">
+            <span class="contact-modal__error" data-for="name"></span>
           </div>
-          <input type="hidden" id="cm-subject">
-          <input type="hidden" id="cm-body">
+          <div class="contact-modal__field">
+            <label class="mono" for="cm-email">Email <span class="required">*</span> <span class="contact-modal__alt">or <a href="${waHref}" target="_blank" rel="noopener">WhatsApp</a></span></label>
+            <input type="email" id="cm-email" name="email" placeholder="you@example.com" required autocomplete="email">
+            <span class="contact-modal__error" data-for="email"></span>
+          </div>
+          <input type="hidden" id="cm-subject" name="_subject">
+          <input type="hidden" id="cm-body" name="message">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <p class="contact-modal__consent">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>By clicking the button below, I agree to send Zen a message about hiring.</span>
+          </p>
           <button type="submit" class="contact-modal__submit btn-pill btn-pill--solid">
             <span class="contact-modal__submit-text">Send message</span>
             <span class="contact-modal__spinner" hidden></span>

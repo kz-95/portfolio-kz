@@ -9,6 +9,7 @@ function initAll() {
   let menuOpen = false;
 
   if (hasGSAP && typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+  if (hasGSAP && typeof Flip !== 'undefined') gsap.registerPlugin(Flip);
 
   /* Lenis smooth scroll */
   let lenis = null;
@@ -131,13 +132,15 @@ function initAll() {
     document.querySelectorAll('[data-count]').forEach((el) => {
       const target = parseInt(el.dataset.count, 10);
       if (isNaN(target)) return;
+      const suffix = el.dataset.suffix || '';
       const obj = { v: 0 };
       ScrollTrigger.create({
         trigger: el, start: 'top 90%', once: true,
         onEnter: () =>
           gsap.to(obj, {
             v: target, duration: 1.6, ease: 'power2.out',
-            onUpdate: () => (el.textContent = Math.round(obj.v)),
+            onUpdate: () => (el.textContent = Math.round(obj.v) + suffix),
+            onComplete: () => { if (suffix) el.textContent = target + suffix; },
           }),
       });
     });
@@ -160,7 +163,7 @@ function initAll() {
         const shouldHide = self.direction === 1 && window.scrollY > 240;
         if (shouldHide !== navHidden) {
           navHidden = shouldHide;
-          gsap.to(navEl, { yPercent: shouldHide ? -130 : 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(navEl, { yPercent: shouldHide ? -185 : 0, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
         }
       },
     });
@@ -340,6 +343,44 @@ function initAll() {
   initArch(prefersReduced, isTouch);
   /* about portrait iridescent shader */
   initAboutShader(prefersReduced);
+  /* about portrait parallax follows cursor (not scroll) */
+  initPortraitParallax(prefersReduced, isTouch);
+}
+
+function initPortraitParallax(prefersReduced, isTouch) {
+  if (prefersReduced || isTouch) return;
+  const art = document.querySelector('.about__portrait-art');
+  if (!art) return;
+  let inView = false;
+  new IntersectionObserver(([e]) => (inView = e.isIntersecting), { threshold: 0 }).observe(art);
+  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  const AMT = 22;
+  function loop() {
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
+    if (inView) art.style.transform = `translate(${cx * AMT}px, ${cy * AMT}px)`;
+    if (Math.abs(tx - cx) > 0.0005 || Math.abs(ty - cy) > 0.0005) {
+      raf = requestAnimationFrame(loop);
+    } else {
+      raf = 0;
+    }
+  }
+  window.addEventListener('pointermove', (e) => {
+    tx = e.clientX / window.innerWidth - 0.5;
+    ty = e.clientY / window.innerHeight - 0.5;
+    if (!raf) raf = requestAnimationFrame(loop);
+  });
+}
+
+/* read theme colors from CSS vars into shader uniforms (THREE.Color) */
+function readThemeColors(THREE, uniforms) {
+  const cs = getComputedStyle(document.body);
+  const pick = (name, fallback) => (cs.getPropertyValue(name).trim() || fallback);
+  try {
+    uniforms.uAccent.value.set(pick('--accent', '#2b3ff2'));
+    uniforms.uBg.value.set(pick('--paper', '#f1f1ec'));
+    uniforms.uText.value.set(pick('--ink', '#14161b'));
+  } catch (_) { /* ignore parse errors */ }
 }
 
 async function initAboutShader(prefersReduced) {
@@ -355,97 +396,8 @@ async function initAboutShader(prefersReduced) {
   }
 
   const holder = canvas.parentElement;
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-  const uniforms = {
-    uTime: { value: 0 },
-    uAspect: { value: 1 },
-  };
-
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    transparent: true,
-    vertexShader: /* glsl */ `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 1.0);
-      }`,
-    fragmentShader: /* glsl */ `
-      precision highp float;
-      varying vec2 vUv;
-      uniform float uTime;
-      uniform float uAspect;
-
-      void main() {
-        vec2 u = vec2((vUv.x * 2.0 - 1.0) * uAspect, vUv.y * 2.0 - 1.0);
-        float a = 0.0, d = 0.0;
-        
-        for (float i = 0.0; i < 8.0; i++) {
-          d += sin(i * u.y + a);
-          a += cos(i - d + 0.5 * uTime - a * u.x);
-        }
-            
-        vec3 col;
-        col.xy = 0.4 + 0.6 * cos(u * vec2(d, a));
-        col.z  = 0.5 + 0.5 * cos(a + d);
-             
-        vec4 o;
-        o.xyz = col;
-        o = cos(0.5 + 0.5 * cos(vec4(d, a, 2.5, 0.0)) * o);
-
-        /* tint to website palette: accent blue (#2b3ff2) to paper white (#f1f1ec) */
-        vec3 accent = vec3(0.169, 0.247, 0.949);
-        vec3 paper  = vec3(0.945, 0.945, 0.925);
-        float lum   = dot(o.rgb, vec3(0.299, 0.587, 0.114));
-        vec3 tinted = mix(accent * 0.6, paper, lum);
-        tinted = mix(tinted, paper, smoothstep(0.5, 0.85, lum) * 0.6);
-
-        gl_FragColor = vec4(tinted, 0.92);
-      }`,
-  });
-
-  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
-
-  function resize() {
-    const w = holder.clientWidth, h = holder.clientHeight;
-    if (w === 0 || h === 0) return;
-    renderer.setSize(w, h, false);
-    uniforms.uAspect.value = w / h;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const clock = new THREE.Clock();
-  let inView = true;
-  new IntersectionObserver(([entry]) => (inView = entry.isIntersecting), { threshold: 0 }).observe(holder);
-
-  renderer.setAnimationLoop(() => {
-    if (!inView) return;
-    uniforms.uTime.value = clock.getElapsedTime();
-    renderer.render(scene, camera);
-  });
-}
-
-async function initArch(prefersReduced, isTouch) {
-  if (prefersReduced) return;
-  const canvas = document.querySelector('.hero-arch__canvas');
-  if (!canvas) return;
-
-  let THREE;
-  try {
-    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js');
-  } catch {
-    return;
-  }
-
-  const holder = canvas.parentElement;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTouch ? 1.25 : 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -454,7 +406,13 @@ async function initArch(prefersReduced, isTouch) {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
     uAspect: { value: 1 },
+    uAccent: { value: new THREE.Color('#2b3ff2') },
+    uBg: { value: new THREE.Color('#f1f1ec') },
+    uText: { value: new THREE.Color('#14161b') },
   };
+  const syncTheme = () => readThemeColors(THREE, uniforms);
+  syncTheme();
+  window.addEventListener('themechange', syncTheme);
 
   const material = new THREE.ShaderMaterial({
     uniforms,
@@ -470,6 +428,9 @@ async function initArch(prefersReduced, isTouch) {
       uniform float uTime;
       uniform vec2 uMouse;
       uniform float uAspect;
+      uniform vec3 uAccent;
+      uniform vec3 uBg;
+      uniform vec3 uText;
 
       float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
       float noise(vec2 p) {
@@ -500,23 +461,155 @@ async function initArch(prefersReduced, isTouch) {
         float r = fbm(p * 1.7 + q * 1.5 - t * 0.7);
         float v = fbm(p * 2.3 + r * 1.9 + m * 0.6);
 
-        vec3 mist   = vec3(0.875, 0.895, 0.940);
-        vec3 powder = vec3(0.600, 0.675, 0.910);
-        vec3 cobalt = vec3(0.170, 0.250, 0.950);
-        vec3 royal  = vec3(0.080, 0.110, 0.520);
-        vec3 ink    = vec3(0.040, 0.050, 0.110);
+        /* palette derived from theme: bg -> accent -> deep accent/text */
+        vec3 cLo   = mix(uBg, uAccent, 0.12);
+        vec3 cMid  = mix(uBg, uAccent, 0.70);
+        vec3 cHi   = uAccent;
+        vec3 cDeep = mix(uAccent, uText, 0.55) * 0.55;
 
-        vec3 col = mix(mist, powder, smoothstep(0.08, 0.5, q));
-        col = mix(col, cobalt, smoothstep(0.28, 0.72, r));
-        col = mix(col, royal, smoothstep(0.48, 0.95, v) * 0.85);
-        col = mix(col, ink, smoothstep(0.72, 1.0, v * r) * 0.5);
-        col = mix(col, royal * 1.1, smoothstep(0.55, 0.0, uv.y) * 0.35);
+        vec3 col = mix(cLo, cMid, smoothstep(0.08, 0.5, q));
+        col = mix(col, cHi, smoothstep(0.28, 0.72, r) * 0.92);
+        col = mix(col, cDeep, smoothstep(0.48, 0.95, v) * 0.80);
+        col = mix(col, cDeep, smoothstep(0.72, 1.0, v * r) * 0.45);
+        col = mix(col, cHi, smoothstep(0.55, 0.0, uv.y) * 0.30);
 
-        col += vec3(0.03, 0.06, 0.22) * smoothstep(0.55, 1.0, uv.y) * (0.5 + 0.5 * sin(t * 2.0));
+        col += (uAccent - 0.5) * 0.10 * smoothstep(0.55, 1.0, uv.y) * (0.5 + 0.5 * sin(t * 2.0));
+
+        col += (hash(uv * vec2(1840.0, 1200.0) + uTime) - 0.5) * 0.04;
+
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  });
+
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+  function resize() {
+    const w = holder.clientWidth, h = holder.clientHeight;
+    if (w === 0 || h === 0) return;
+    renderer.setSize(w, h, false);
+    uniforms.uAspect.value = w / h;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+  if (!isTouch) {
+    window.addEventListener('pointermove', (e) => {
+      mouse.tx = e.clientX / window.innerWidth;
+      mouse.ty = 1 - e.clientY / window.innerHeight;
+    });
+  }
+
+  const clock = new THREE.Clock();
+  let inView = true;
+  new IntersectionObserver(([entry]) => (inView = entry.isIntersecting), { threshold: 0 }).observe(holder);
+
+  renderer.setAnimationLoop(() => {
+    if (!inView) return;
+    mouse.x += (mouse.tx - mouse.x) * 0.04;
+    mouse.y += (mouse.ty - mouse.y) * 0.04;
+    uniforms.uMouse.value.set(mouse.x, mouse.y);
+    uniforms.uTime.value = clock.getElapsedTime();
+    renderer.render(scene, camera);
+  });
+}
+
+async function initArch(prefersReduced, isTouch) {
+  if (prefersReduced) return;
+  const canvas = document.querySelector('.hero-arch__canvas');
+  if (!canvas) return;
+
+  let THREE;
+  try {
+    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js');
+  } catch {
+    return;
+  }
+
+  const holder = canvas.parentElement;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTouch ? 1.25 : 1.75));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+  const uniforms = {
+    uTime: { value: 0 },
+    uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+    uAspect: { value: 1 },
+    uAccent: { value: new THREE.Color('#2b3ff2') },
+    uBg: { value: new THREE.Color('#f1f1ec') },
+    uText: { value: new THREE.Color('#14161b') },
+  };
+  const syncTheme = () => readThemeColors(THREE, uniforms);
+  syncTheme();
+  window.addEventListener('themechange', syncTheme);
+
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: /* glsl */ `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.0);
+      }`,
+    fragmentShader: /* glsl */ `
+      precision highp float;
+      varying vec2 vUv;
+      uniform float uTime;
+      uniform vec2 uMouse;
+      uniform float uAspect;
+      uniform vec3 uAccent;
+      uniform vec3 uBg;
+      uniform vec3 uText;
+
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+      float noise(vec2 p) {
+        vec2 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(
+          mix(hash(i), hash(i + vec2(1, 0)), f.x),
+          mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+      }
+      float fbm(vec2 p) {
+        float v = 0.0, a = 0.5;
+        mat2 r = mat2(0.8, 0.6, -0.6, 0.8);
+        for (int i = 0; i < 5; i++) {
+          v += a * noise(p);
+          p = r * p * 2.0 + vec2(1.7, 4.6);
+          a *= 0.5;
+        }
+        return v;
+      }
+
+      void main() {
+        vec2 uv = vUv;
+        vec2 p = vec2(uv.x * uAspect, uv.y);
+        float t = uTime * 0.07;
+        vec2 m = (uMouse - 0.5) * 0.45;
+
+        float q = fbm(p * 1.7 + t + m);
+        float r = fbm(p * 1.7 + q * 1.5 - t * 0.7);
+        float v = fbm(p * 2.3 + r * 1.9 + m * 0.6);
+
+        /* palette derived from theme: bg -> accent -> deep accent/text */
+        vec3 cLo   = mix(uBg, uAccent, 0.12);
+        vec3 cMid  = mix(uBg, uAccent, 0.70);
+        vec3 cHi   = uAccent;
+        vec3 cDeep = mix(uAccent, uText, 0.55) * 0.55;
+
+        vec3 col = mix(cLo, cMid, smoothstep(0.08, 0.5, q));
+        col = mix(col, cHi, smoothstep(0.28, 0.72, r) * 0.92);
+        col = mix(col, cDeep, smoothstep(0.48, 0.95, v) * 0.80);
+        col = mix(col, cDeep, smoothstep(0.72, 1.0, v * r) * 0.45);
+        col = mix(col, cHi, smoothstep(0.55, 0.0, uv.y) * 0.30);
+
+        col += (uAccent - 0.5) * 0.10 * smoothstep(0.55, 1.0, uv.y) * (0.5 + 0.5 * sin(t * 2.0));
 
         col += (hash(uv * vec2(1840.0, 1200.0) + uTime) - 0.5) * 0.05;
 
-        /* iridescent rainbow blend at bottom — subtle blue-to-white */
+        /* iridescent rainbow blend at bottom — accent -> bg gradient */
         vec2 u = vec2((vUv.x * 2.0 - 1.0) * uAspect, vUv.y * 2.0 - 1.0);
         float a2 = 0.0, d2 = 0.0;
         for (float i = 0.0; i < 8.0; i++) {
@@ -530,15 +623,11 @@ async function initArch(prefersReduced, isTouch) {
         io.xyz = ic;
         io = cos(0.5 + 0.5 * cos(vec4(d2, a2, 2.5, 0.0)) * io);
 
-        /* tint to accent-blue → paper-white gradient */
-        vec3 accent = vec3(0.169, 0.247, 0.949);
-        vec3 paper  = vec3(0.945, 0.945, 0.925);
         float lum = dot(io.rgb, vec3(0.299, 0.587, 0.114));
-        vec3 iridescent = mix(accent * 0.6, paper, lum * 1.2);
-        /* add subtle rainbow shift — cool blue → warm violet → white */
-        iridescent = mix(iridescent, paper, smoothstep(0.4, 0.8, lum) * 0.6);
+        vec3 iridescent = mix(uAccent * 0.6, uBg, lum * 1.2);
+        iridescent = mix(iridescent, uBg, smoothstep(0.4, 0.8, lum) * 0.6);
 
-        /* blend: bottom 50% = iridescent rainbow, top = original flow-field */
+        /* blend: bottom 50% = iridescent, top = original flow-field */
         float ib = smoothstep(0.0, 0.5, uv.y);
         col = mix(iridescent, col, ib);
 

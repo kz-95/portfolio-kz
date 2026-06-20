@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuan Zhe Huang - Junior Fullstack Web Developer</title>
+<style>
+  :root{
+    --ink:#161a20;
+    --muted:#525c6b;
+    --line:#d7dde6;
+    --accent:#0f3a87;
+    --accent-deep:#072554;
+    --accent-soft:#e4ecfa;
+    --bg:#ffffff;
+    --chip:#eef2f8;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:#e9edf3;
+    line-height:1.42;
+    font-size:15px;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+
+  .page{
+    max-width:820px;
+    margin:24px auto;
+    background:var(--bg);
+    box-shadow:0 8px 30px rgba(0,0,0,.10);
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:30px 44px 22px;
+    border-bottom:3px solid var(--accent);
+    background:linear-gradient(135deg, #f4f8ff 0%, #e7eefc 45%, #dde9fb 100%);
+  }
+  .head-row{
+    display:flex;
+    align-items:center;
+    gap:30px;
+  }
+  .avatar{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:50% 22%;
+    flex-shrink:0;
+    border:4px solid #ffffff;
+    box-shadow:0 3px 14px rgba(13,58,140,.28);
+  }
+  .head-text{flex:1;min-width:0;}
+  .name{
+    font-size:36px;
+    font-weight:700;
+    letter-spacing:-.6px;
+    line-height:1.02;
+    color:var(--accent-deep);
+  }
+  .name span{color:var(--muted);font-weight:400;}
+  .title{
+    font-size:16px;
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    margin-top:5px;
+  }
+  .contact{
+    margin-top:12px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px 10px;
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .contact span{display:inline-flex;align-items:center;white-space:nowrap;}
+  .contact .sep{color:var(--accent);opacity:.45;font-weight:700;margin:0;}
+  .contact a{color:var(--accent);text-decoration:none;font-weight:700;}
+  .contact a:hover{text-decoration:underline;}
+  .contact b{color:var(--ink);font-weight:600;}
+
+  /* ---------- Layout ---------- */
+  main{padding:20px 44px 34px;}
+  section{margin-bottom:18px;}
+  h2{
+    font-size:14px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    color:var(--accent);
+    padding-bottom:5px;
+    border-bottom:1.5px solid var(--line);
+    margin-bottom:10px;
+  }
+
+  /* ---------- Summary ---------- */
+  .summary{font-size:14.5px;color:#2b313b;}
+
+  /* ---------- Skills ---------- */
+  .skill-grid{display:grid;grid-template-columns:135px 1fr;gap:7px 14px;font-size:14px;}
+  .skill-grid .label{font-weight:700;color:var(--ink);}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{
+    background:var(--chip);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 10px;
+    font-size:13px;
+    color:#2c333d;
+  }
+
+  /* ---------- Projects ---------- */
+  .project{margin-bottom:15px;}
+  .project:last-child{margin-bottom:0;}
+  .proj-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .proj-name{font-size:16px;font-weight:700;color:var(--accent-deep);}
+  .proj-name a{color:var(--accent);text-decoration:none;font-size:12.5px;font-weight:600;}
+  .proj-name .proj-date{font-size:13px;font-weight:700;color:var(--accent);margin-left:8px;}
+  .proj-meta{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+  .proj-link{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--accent);
+    text-decoration:none;
+    white-space:nowrap;
+    border-bottom:1.5px solid var(--accent);
+    padding-bottom:1px;
+  }
+  .proj-link:hover{color:var(--accent-deep);border-color:var(--accent-deep);}
+  .proj-stackrow{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:1px;
+  }
+  .proj-stack{font-size:12.5px;color:var(--muted);font-style:italic;}
+  .proj-date{font-style:normal;font-weight:700;color:var(--accent);}
+  .proj-tag{
+    font-size:11.5px;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:4px;
+    padding:1px 8px;
+    font-weight:700;
+    font-style:normal;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .star{list-style:none;margin-top:6px;}
+  .star li{
+    position:relative;
+    padding-left:15px;
+    margin-bottom:4px;
+    font-size:13.5px;
+    color:#2b313b;
+  }
+  .star li::before{content:"•";position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .star li b{
+    position:absolute;
+    left:0;
+    top:1px;
+    width:72px;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    color:var(--accent);
+  }
+
+  /* ---------- Experience ---------- */
+  .exp{margin-bottom:11px;}
+  .exp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .exp-role{font-weight:700;font-size:15px;}
+  .exp-co{color:var(--muted);font-size:14px;}
+  .exp-date{color:var(--muted);font-size:13px;white-space:nowrap;}
+  .exp ul{margin-top:4px;padding-left:18px;}
+  .exp li{font-size:13.5px;margin-bottom:3px;color:#2b313b;}
+
+  /* ---------- Two col bottom ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .mini h3{font-size:14px;font-weight:700;margin-bottom:6px;}
+  .mini ul{padding-left:16px;}
+  .mini li{font-size:13.5px;margin-bottom:3px;color:#2b313b;}
+
+  .langs{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;}
+  .langs span b{color:var(--ink);}
+  .langs span{color:var(--muted);}
+
+  /* ---------- Plain point-form lists ---------- */
+  ul.plain{list-style:none;padding-left:0;}
+  ul.plain li{position:relative;padding-left:15px;margin-bottom:4px;font-size:13.5px;color:#2b313b;}
+  ul.plain li::before{content:"•";position:absolute;left:0;color:var(--accent);font-weight:700;}
+  ul.plain li b{color:var(--ink);}
+  ul.plain.two-col{column-count:2;column-gap:28px;}
+  ul.plain.two-col li{break-inside:avoid;}
+
+  /* ---------- Print ---------- */
+  @page{ size: A4; margin: 0; }
+
+  @media print{
+    *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    html,body{background:#fff;font-size:12px;line-height:1.4;}
+    .page{box-shadow:none;margin:0;max-width:100%;}
+
+    header{padding:11mm 14mm 6mm;}
+    .avatar{width:104px;height:104px;border-width:4px;}
+    .head-row{gap:22px;}
+    .name{font-size:27px;}
+    .title{font-size:13.5px;margin-top:3px;}
+    .contact{margin-top:8px;font-size:11.5px;gap:3px 0;line-height:1.5;}
+
+    main{padding:7mm 14mm 6mm;}
+    section{margin-bottom:8px;}
+    .project,.exp{page-break-inside:avoid;}
+    .skills-section{page-break-inside:avoid;}
+    .page2-lead{padding-top:9mm;}
+    h2{font-size:12.5px;margin-bottom:7px;padding-bottom:4px;}
+
+    .summary{font-size:12.5px;}
+    .skill-grid{font-size:12px;gap:6px 14px;grid-template-columns:130px 1fr;}
+    .chip{font-size:11px;padding:2px 9px;}
+
+    .project{margin-bottom:11px;}
+    .proj-name{font-size:14px;}
+    .proj-link{font-size:11px;}
+    .proj-stack{font-size:11.5px;}
+    .proj-tag{font-size:10.5px;padding:2px 8px;}
+    .star li{font-size:12px;padding-left:14px;margin-bottom:2px;}
+
+    .exp{margin-bottom:7px;}
+    .exp-role{font-size:13px;}
+    .exp-co{font-size:12px;}
+    .exp-date{font-size:11.5px;}
+    .exp li{font-size:12px;margin-bottom:1.5px;}
+
+    .mini h3{font-size:12.5px;margin-bottom:6px;}
+    .mini li{font-size:12px;margin-bottom:2px;}
+    ul.plain li{font-size:12px;margin-bottom:2px;}
+    .langs{font-size:12px;gap:6px 16px;}
+
+    .no-print{display:none!important;}
+    a{color:var(--accent) !important;text-decoration:none;}
+    h2,.proj-name,.exp-role{page-break-after:avoid;}
+  }
+
+  .bar{
+    max-width:820px;
+    margin:0 auto 0;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    padding-top:18px;
+  }
+  .btn{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:7px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .btn.alt{background:#fff;color:var(--accent);border:1.5px solid var(--accent);}
+</style>
+</head>
+<body>
+
+<div class="bar no-print">
+  <button class="btn" onclick="window.print()">⬇ Save as PDF / Print</button>
+</div>
+
+<div class="page">
+  <header>
+    <div class="head-row">
+      <img class="avatar" src="img/Profile_Picture.png" alt="Kuan Zhe Huang">
+      <div class="head-text">
+        <div class="name">Kuan <span>Zhe Huang</span></div>
+        <div class="title">Junior Fullstack Web Developer</div>
+        <div class="contact">
+          <span>Puchong, Selangor, Malaysia</span>
+          <span class="sep">&nbsp;·&nbsp;</span>
+          <span>+6018 2862 739</span>
+          <span class="sep">&nbsp;·&nbsp;</span>
+          <span><a href="mailto:coffeeinveins@gmail.com">coffeeinveins@gmail.com</a></span>
+          <span class="sep">&nbsp;·&nbsp;</span>
+          <span><a href="https://github.com/allergictoanything">github.com/allergictoanything</a></span>
+          <span class="sep">&nbsp;·&nbsp;</span>
+          <span><a href="https://zen-resume.pages.dev">zen-resume.pages.dev</a></span>
+          <span class="sep">&nbsp;·&nbsp;</span>
+          <span><a href="https://linkedin.com/in/zenkuan/">linkedin.com/in/zenkuan</a></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SUMMARY -->
+    <section>
+      <h2>Professional Summary</h2>
+      <p class="summary">
+        I build and ship full web applications end to end - Angular and clean HTML/CSS up front,
+        C# and Python behind the scenes, PostgreSQL for data. I design REST APIs, deliver clean CRUD
+        features, and deploy with Docker, Git, Cloudflare, and Railway. I solve problems fast, learn
+        new tools quickly, and adapt to whatever the work demands. Driven to grow long-term and
+        working toward PMP certification, sharpening both my engineering and project-leadership skills.
+      </p>
+    </section>
+
+    <!-- PROJECTS -->
+    <section>
+      <h2>Projects</h2>
+
+      <!-- Project 1: Co-Bug Dump -->
+      <div class="project">
+        <div class="proj-head">
+          <div class="proj-name">My Home Servicer - Home Services Booking Platform <span class="proj-date">Jun 2026</span></div>
+          <div class="proj-meta">
+            <a class="proj-link" href="https://myhomeservicer.pages.dev">myhomeservicer.pages.dev</a>
+          </div>
+        </div>
+        <div class="proj-stackrow">
+          <div class="proj-stack">Angular · TypeScript · REST API · PostgreSQL · AI Chat Assistant · Auth &amp; Roles</div>
+          <span class="proj-tag">Fullstack · AI Assistant · Database</span>
+        </div>
+        <ul class="star">
+          <li>Built a full home-services booking platform solo in 2 months (AGMO capstone), connecting tenants who don't know who to call with the right SME or freelance servicer for their home problem.</li>
+          <li>Designed an AI chat assistant as the core feature: tenants describe an issue in plain language, and the assistant categorizes it, suggests available services, guides the booking, then auto-fills a complete summary. It's basically filling the form without filling the form, driven entirely by conversation.</li>
+          <li>Engineered role-aware AI across 4 user types (Guest, Customer, Servicer, Admin) with admin-injectable knowledge bases, plus a resilient multi-key LLM system with automatic failover on a 5-second cycle to keep the assistant running when a token is exhausted.</li>
+          <li>Built a full admin operations console (account management, banning, usage graphs, AI config) secured by a two-layer PIN gate on database edits; delivered a working end-to-end product and learned to manage solo CI/CD pipeline usage after burning through build quota too fast.</li>
+        </ul>
+      </div>
+
+      <!-- Project 2: Co-Bug Dump -->
+      <div class="project">
+        <div class="proj-head">
+          <div class="proj-name">Co-Bug Dump - AI-Assisted Bug &amp; Task Tracker <span class="proj-date">May 2026</span></div>
+          <div class="proj-meta">
+            <a class="proj-link" href="https://github.com/AllergicToAnything/co-bug-dump">github.com/AllergicToAnything/co-bug-dump</a>
+          </div>
+        </div>
+        <div class="proj-stackrow">
+          <div class="proj-stack">HTML · CSS · JavaScript · Google Sheets · Apps Script · LLM API / Ollama · Mobile-First CSS</div>
+          <span class="proj-tag">Fullstack · AI Integration</span>
+        </div>
+        <ul class="star">
+          <li>Built this out of real frustration: while testing my own site across a desktop, a borrowed laptop, and my phone, I had no quick way to jot down a bug when a machine wasn't in front of me.</li>
+          <li>Shipped an ultra-lightweight single-file app (only about 115KB) that uses Google Sheets as its database through Apps Script, with a guided 2-minute setup (sheet link plus a secret key), so it's portable, needs zero infrastructure, and suits small teams working locally.</li>
+          <li>Added a "Magic Tidy" AI feature: you type one rough line about a bug and the LLM turns it into a clean title, category, and priority, which cuts the clicks and friction that usually make logging on a phone a pain.</li>
+          <li>Made it bring-your-own-LLM: users plug in any API key or run a local model with Ollama (documented right in the app), keeping the tool free, flexible, and privacy-friendly.</li>
+          <li>Built a mobile-first workflow with three statuses (Open, WIP, Done), easy screenshot attachment, and pull/push sync to Google Sheets so teammates can work off the same board.</li>
+        </ul>
+      </div>
+
+      <!-- Project 3: SSG-Resume -->
+      <div class="project">
+        <div class="proj-head">
+          <div class="proj-name">SSG-Resume - Resume &amp; Portfolio Template Site <span class="proj-date">Apr 2026</span></div>
+          <div class="proj-meta">
+            <a class="proj-link" href="https://ssg-resume.pages.dev">ssg-resume.pages.dev</a>
+          </div>
+        </div>
+        <div class="proj-stackrow">
+          <div class="proj-stack">HTML · CSS · JavaScript · JSON-Driven UI · Git · Cloudflare Pages</div>
+          <span class="proj-tag">Frontend · JSON-Driven · Deployment</span>
+        </div>
+        <ul class="star">
+          <li>Started as a Git fundamentals exercise in my AGMO training (init, clone, branch, merge, push/pull, remote/origin) that I saw real potential in, so I turned it into something I'd actually use.</li>
+          <li>Built it into a reusable resume and portfolio template because no-code builders like Wix and Carrd felt too limiting, and I wanted full control over the design plus a place to keep my achievements up to date.</li>
+          <li>Made it fully data-driven: you edit one JSON file and the site updates itself, auto-generating the filters, types, and tags from your arrays instead of hand-adding elements every time.</li>
+          <li>Set up Git-push to Cloudflare Pages auto-deploy so every change goes live on its own, and built it so any developer can fork it and have a clean, animated portfolio running with minimal setup.</li>
+        </ul>
+      </div>
+
+      <!-- Project 4: More Projects -->
+      <div class="project page2-lead">
+        <div class="proj-head">
+          <div class="proj-name">Additional Projects <span class="proj-date">2018 – Present</span></div>
+          <div class="proj-meta">
+            <a class="proj-link" href="https://zen-resume.pages.dev/portfolio">zen-resume.pages.dev/portfolio</a>
+          </div>
+        </div>
+        <div class="proj-stackrow">
+          <div class="proj-stack">3D &amp; Rendering · Game Dev · VFX · Web apps · Tools · AI integrations</div>
+          <span class="proj-tag">Portfolio · Updated Regularly</span>
+        </div>
+        <ul class="star">
+          <li>A portfolio I've been building since 2018, showing my path from 3D modeling and rendering into game development, then VFX, and now web apps, across AAA, indie, MNC, and SME work.</li>
+          <li>Notable contributions include the Medal of Honor: Above and Beyond VR port, Operatives Revolve, the Sunway interactive project, and the Setia Alam e-brochure project.</li>
+          <li>Live demos, case studies, and source links are kept current at zen-resume.pages.dev/portfolio and zenkuan.carrd.co.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills-section">
+      <h2>Skills</h2>
+      <ul class="plain">
+        <li><b>Languages:</b> JavaScript, TypeScript, C#, HTML5, CSS3, Python</li>
+        <li><b>Frontend:</b> Angular, Pure HTML / CSS, Responsive / Mobile-First, REST consumption</li>
+        <li><b>Backend:</b> C#, Python, REST API Design, CRUD Systems, PostgreSQL, API Integration</li>
+        <li><b>DevOps &amp; Cloud:</b> Docker, Cloudflare Pages, Railway, CI / Deployment</li>
+        <li><b>Tools &amp; Workflow:</b> Git, GitHub, Postman, VS Code, AI-Assisted Development</li>
+        <li><b>Core Strengths:</b> Critical Thinking, Problem Solving, Quick Learning &amp; Upskilling, Adaptability, Eager to Grow Long-Term</li>
+      </ul>
+    </section>
+
+    <!-- EXPERIENCE (reframed transferable) -->
+    <section class="exp-section">
+      <h2>Relevant Experience</h2>
+
+      <div class="exp">
+        <div class="exp-head">
+          <div><span class="exp-role">Technical Artist / Generalist</span> <span class="exp-co">- The Only Studio Sdn. Bhd. (Contract)</span></div>
+          <span class="exp-date">Feb 2025 – Nov 2025</span>
+        </div>
+        <ul>
+          <li>Built tools and systems with C# to solve technical problems and streamline team workflows.</li>
+          <li>Designed and implemented real-time effects and supported animation integration on a cinematic roguelike deck-builder game.</li>
+          <li>Acted as a multi-role team member, collaborating across design and engineering discussions and translating requirements into working features under deadlines.</li>
+        </ul>
+      </div>
+
+      <div class="exp">
+        <div class="exp-head">
+          <div><span class="exp-role">3D Environment Artist</span> <span class="exp-co">- Virtuos Malaysia Sdn. Bhd.</span></div>
+          <span class="exp-date">Feb 2021 – Apr 2023</span>
+        </div>
+        <ul>
+          <li>Worked on multiple AAA projects (under NDA) and one shipped VR FPS title within a structured production pipeline.</li>
+          <li>Specialized in asset optimization and environment setup, gaining deep understanding of large-scale workflows and version control.</li>
+          <li>Built collaboration and delivery discipline directly transferable to software engineering teams.</li>
+        </ul>
+      </div>
+
+      <div class="exp">
+        <div class="exp-head">
+          <div><span class="exp-role">Unity Developer &amp; 3D Generalist</span> <span class="exp-co">- Framemakers Creative Sdn. Bhd.</span></div>
+          <span class="exp-date">Jan 2020 – Dec 2020</span>
+        </div>
+        <ul>
+          <li>Adapted rapidly to new tooling within a month, transitioning into a combined developer and generalist role.</li>
+          <li>Executed solo Unity projects end to end, demonstrating strong programming and problem-solving skills.</li>
+          <li>Contributed to company portfolio work, building immersive 3D scenes and showcasing technical creativity.</li>
+        </ul>
+      </div>
+
+      <div class="exp">
+        <div class="exp-head">
+          <div><span class="exp-role">Unity Programmer</span> <span class="exp-co">- Persona Theory (Internship, Full-time)</span></div>
+          <span class="exp-date">Feb 2019 – Dec 2019</span>
+        </div>
+        <ul>
+          <li>Developed C# tools within Unity to improve team efficiency and solve recurring coding challenges.</li>
+          <li>Fostered effective communication and collaboration across the team, growing quickly as a developer.</li>
+          <li>Represented the studio at LevelUp Play &amp; Biz and participated in SEA Game Jam 2019.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+      <h2>Education</h2>
+      <ul class="plain">
+        <li><b>Diploma in 3D Animation</b> - Undo Academy (2017–2019)</li>
+        <li><b>Foundation in Design</b> - Limkokwing (2016–2017)</li>
+        <li><b>Continuous self-learning</b> - Fullstack web development, Angular, TypeScript, PostgreSQL, AI-assisted workflows (ongoing)</li>
+      </ul>
+    </section>
+
+    <!-- COMMUNITY INVOLVEMENT -->
+    <section>
+      <h2>Community Involvement &amp; Activities</h2>
+      <ul class="plain two-col">
+        <li><b>Charity Bazaar Vendor</b> (2025) - ran a booth end to end; donated proceeds and leftover stock to House of Joy children's home</li>
+        <li><b>AGMO Training</b> (2026) - Upskilling Program</li>
+        <li><b>Level Up KL</b> (2025) - Representative</li>
+        <li><b>Level Up KL Play</b> (2024) - Booth Assistant</li>
+        <li><b>Global Game Jam</b> (2023) - 3D Artist / Animator</li>
+        <li><b>Virtuos Internal Game Jam</b> (2022) - 3D Artist / Animator</li>
+        <li><b>SEA Game Jam</b> (2019) - Programmer</li>
+        <li><b>Free Dev Tools</b> (2026) - sharing free tools on GitHub for the community</li>
+        <li><b>Active Roadmap</b> (2026) - Co-Bug Dump &amp; HR Scorer (ongoing side projects)</li>
+      </ul>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section style="margin-bottom:0">
+      <h2>Languages</h2>
+      <ul class="plain">
+        <li><b>English</b> - Fluent</li>
+        <li><b>Mandarin</b> - Fluent</li>
+        <li><b>Malay</b> - Conversational</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>
