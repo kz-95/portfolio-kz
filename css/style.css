@@ -195,11 +195,12 @@ em { font-family: var(--font-display); font-style: italic; font-weight: 460; }
     background: rgba(43, 63, 242, 0.92);
   }
   .cursor.is-view .cursor__label { opacity: 1; }
+  .cursor.is-hover .cursor__label { opacity: 1; }
   .cursor.is-hover .cursor__ring {
     width: 56px; height: 56px;
     margin: -28px 0 0 -28px;
-    background: rgba(43, 63, 242, 0.15);
-    box-shadow: 0 0 16px 4px rgba(234, 200, 80, 0.35), 0 0 32px 8px rgba(234, 200, 80, 0.15);
+    background: rgba(43, 63, 242, 0.1);
+    box-shadow: 0 0 0 2px rgba(234, 200, 80, 0.45);
   }
 }
 
