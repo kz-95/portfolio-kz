@@ -275,7 +275,9 @@ function initAll() {
           } else {
             cursor.classList.add('is-hover');
             if (label) {
-              const isExternal = el.getAttribute('target') === '_blank' || el.getAttribute('rel') === 'noopener';
+              const isExternal = el.getAttribute('target') === '_blank' 
+                || el.getAttribute('rel') === 'noopener'
+                || el.dataset.serviceTarget === '_blank';
               label.textContent = isExternal ? 'LINK' : 'CLICK';
             }
           }
@@ -291,7 +293,9 @@ function initAll() {
         el.addEventListener('pointerenter', () => {
           cursor.classList.add('is-hover');
           if (label && !el.dataset.cursor) {
-            const isExternal = el.getAttribute('target') === '_blank' || el.getAttribute('rel') === 'noopener';
+            const isExternal = el.getAttribute('target') === '_blank' 
+              || el.getAttribute('rel') === 'noopener'
+              || el.dataset.serviceTarget === '_blank';
             label.textContent = isExternal ? 'LINK' : 'CLICK';
           }
         });
