@@ -274,7 +274,10 @@ function initAll() {
             if (label) label.textContent = 'VIEW';
           } else {
             cursor.classList.add('is-hover');
-            if (label) label.textContent = 'CLICK';
+            if (label) {
+              const isExternal = el.getAttribute('target') === '_blank' || el.getAttribute('rel') === 'noopener';
+              label.textContent = isExternal ? 'LINK' : 'CLICK';
+            }
           }
         });
         el.addEventListener('pointerleave', () => {
@@ -287,7 +290,10 @@ function initAll() {
       document.querySelectorAll('a, button, .work-card').forEach((el) => {
         el.addEventListener('pointerenter', () => {
           cursor.classList.add('is-hover');
-          if (label && !el.dataset.cursor) label.textContent = 'CLICK';
+          if (label && !el.dataset.cursor) {
+            const isExternal = el.getAttribute('target') === '_blank' || el.getAttribute('rel') === 'noopener';
+            label.textContent = isExternal ? 'LINK' : 'CLICK';
+          }
         });
         el.addEventListener('pointerleave', () => {
           cursor.classList.remove('is-hover');
