@@ -80,10 +80,10 @@
     "mockupBrowser": "img/mhs-browser.png",
     "mockupPhone": "img/mhs-phone.png",
     "stats": [
-      { "value": "30+", "label": "service categories" },
-      { "value": "7+", "label": "service verticals" },
       { "value": 4, "label": "gated role layers" },
-      { "value": 1, "label": "seamless quote-to-pay flow" }
+      { "value": 7, "label": "service verticals" },
+      { "value": "30+", "label": "service categories" },
+      { "value": 49, "label": "data models" }
     ]
   },
   "works": {
@@ -155,20 +155,28 @@
       },
       {
         "idx": "03",
-        "title": "3D &amp; VFX",
-        "tags": "BLENDER \u00b7 3DS MAX \u00b7 GLSL \u00b7 HLSL \u00b7 SUBSTANCE",
+        "title": "VFX",
+        "tags": "BLENDER \u00b7 UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 HLSL \u00b7 GLSL \u00b7 NIAGARA",
         "behavior": "external",
-        "url": "https://kze.artstation.com",
+        "url": "https://zenkuan.carrd.co",
         "targetBlank": true
       },
       {
         "idx": "04",
-        "title": "Tool Creation &amp; Automation",
+        "title": "Tool Creation & Automation",
         "tags": "PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
         "behavior": "detail",
         "gallery": [],
         "description": "Custom tools that accelerate workflows and eliminate repetitive tasks.",
         "liveUrl": ""
+      },
+      {
+        "idx": "05",
+        "title": "3D",
+        "tags": "3DS MAX \u00b7 MAYA \u00b7 SUBSTANCE",
+        "behavior": "external",
+        "url": "https://kze.artstation.com",
+        "targetBlank": true
       }
     ]
   },
