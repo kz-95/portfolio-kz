@@ -400,14 +400,8 @@ function renderHiddenContainers() {
             <input type="email" id="cm-email" placeholder="you@example.com" required autocomplete="email">
             <span class="contact-modal__error"></span>
           </div>
-          <div class="contact-modal__field">
-            <label class="mono" for="cm-subject">Subject</label>
-            <input type="text" id="cm-subject" hidden>
-          </div>
-          <div class="contact-modal__field">
-            <label class="mono" for="cm-body">Message</label>
-            <textarea id="cm-body" rows="5" hidden></textarea>
-          </div>
+          <input type="hidden" id="cm-subject">
+          <input type="hidden" id="cm-body">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <button type="submit" class="contact-modal__submit btn-pill btn-pill--solid">
             <span class="contact-modal__submit-text">Send message</span>
