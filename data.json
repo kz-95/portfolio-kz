@@ -138,7 +138,7 @@
       {
         "idx": "01",
         "title": "Full Stack Development",
-        "tags": "ANGULAR \u00b7 REACT \u00b7 NODE.JS \u00b7 TYPESCRIPT",
+        "tags": "ANGULAR \u00b7 REACT \u00b7 REST API \u00b7 NODE.JS \u00b7 TYPESCRIPT",
         "behavior": "detail",
         "gallery": [],
         "description": "End-to-end web applications - from database schema to deployment. I build products that ship.",
@@ -146,23 +146,6 @@
       },
       {
         "idx": "02",
-        "title": "Game Development",
-        "tags": "UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 GAMEPLAY SYSTEMS",
-        "behavior": "detail",
-        "gallery": [],
-        "description": "AAA gameplay systems, editor tools, and real-time 3D experiences.",
-        "liveUrl": ""
-      },
-      {
-        "idx": "03",
-        "title": "VFX",
-        "tags": "BLENDER \u00b7 UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 HLSL \u00b7 GLSL \u00b7 NIAGARA",
-        "behavior": "external",
-        "url": "https://zenkuan.carrd.co",
-        "targetBlank": true
-      },
-      {
-        "idx": "04",
         "title": "Tool Creation & Automation",
         "tags": "PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
         "behavior": "detail",
@@ -171,7 +154,24 @@
         "liveUrl": ""
       },
       {
-        "idx": "05",
+        "idx": "03",
+        "title": "Game Development",
+        "tags": "UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 GAMEPLAY SYSTEMS",
+        "behavior": "detail",
+        "gallery": [],
+        "description": "AAA gameplay systems, editor tools, and real-time 3D experiences.",
+        "liveUrl": ""
+      },
+      {
+        "idx": "04 External Link",
+        "title": "VFX",
+        "tags": "BLENDER \u00b7 UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 HLSL \u00b7 GLSL \u00b7 NIAGARA",
+        "behavior": "external",
+        "url": "https://zenkuan.carrd.co",
+        "targetBlank": true
+      },
+      {
+        "idx": "05 External Link",
         "title": "3D",
         "tags": "3DS MAX \u00b7 MAYA \u00b7 SUBSTANCE",
         "behavior": "external",
@@ -196,7 +196,9 @@
       "formId": "mjgdnrrz",
       "endpoint": "https://formspree.io/f/mjgdnrrz",
       "subjectTemplate": "Portfolio inquiry from {email}",
-      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}"
+      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}",
+      "hintSubject": "Type your email above to auto-fill",
+      "hintBody": "Type your email above to auto-fill"
     }
   },
   "footer": {

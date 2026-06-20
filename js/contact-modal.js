@@ -48,13 +48,14 @@ document.addEventListener('dom:ready', function () {
       gsap.to(panel, { scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out', delay: 0.05 });
     }
 
-    /* Reset + pre-fill */
+    /* Reset + pre-fill from data.json */
     resetForm();
-    /* pre-fill with default email as hint */
+    const d = window.__data;
+    const fs = d?.contact?.formspree;
     const subj = document.getElementById('cm-subject');
     const body = document.getElementById('cm-body');
-    if (subj) subj.value = 'Type your email above to auto-fill';
-    if (body) body.value = 'Type your email above to auto-fill';
+    if (subj) subj.value = fs?.hintSubject || '';
+    if (body) body.value = fs?.hintBody || '';
     const em = document.getElementById('cm-email');
     em?.focus();
   }
@@ -131,10 +132,12 @@ document.addEventListener('dom:ready', function () {
     if (!validateEmail(email)) {
       if (errEl) errEl.textContent = 'Please enter a valid email address';
       if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
+      const d = window.__data;
+      const fs = d?.contact?.formspree;
       const subj = document.getElementById('cm-subject');
       const body = document.getElementById('cm-body');
-      if (subj) subj.value = 'Type your email above to auto-fill';
-      if (body) body.value = 'Type your email above to auto-fill';
+      if (subj) subj.value = fs?.hintSubject || '';
+      if (body) body.value = fs?.hintBody || '';
     } else {
       autoFill(email);
     }
