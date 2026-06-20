@@ -196,9 +196,7 @@
       "formId": "mjgdnrrz",
       "endpoint": "https://formspree.io/f/mjgdnrrz",
       "subjectTemplate": "Portfolio inquiry from {email}",
-      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}",
-      "hintSubject": "Type your email above to auto-fill",
-      "hintBody": "Type your email above to auto-fill"
+      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}"
     }
   },
   "footer": {
