@@ -162,6 +162,7 @@ em { font-family: var(--font-display); font-style: italic; font-weight: 460; }
 .cursor { display: none; }
 @media (pointer: fine) {
   .js .cursor { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 2500; }
+  .js body, .js a, .js button, .js [data-cursor] { cursor: none; }
   .cursor__dot {
     position: absolute;
     width: 8px; height: 8px;
