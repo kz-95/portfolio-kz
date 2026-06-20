@@ -23,16 +23,25 @@ document.addEventListener('dom:ready', function () {
   function buildContent(svc) {
     if (!svc) return '';
     const hasGallery = svc.gallery && svc.gallery.length > 0;
-    const galleryHTML = hasGallery
-      ? svc.gallery.map(src => `<img src="${esc(src)}" alt="${esc(svc.title)}" loading="lazy">`).join('')
-      : `<div class="service-expanded__placeholder"><span>${esc(svc.idx)}</span></div>`;
+    const arrows = hasGallery && svc.gallery.length > 1
+      ? `<button class="carousel__btn carousel__btn--prev" data-carousel-prev aria-label="Previous image">‹</button>
+         <button class="carousel__btn carousel__btn--next" data-carousel-next aria-label="Next image">›</button>`
+      : '';
+    const mediaHTML = hasGallery
+      ? `<div class="service-expanded__carousel">
+           <div class="service-expanded__gallery" data-carousel-track>${
+             svc.gallery.map(src => `<img src="${esc(src)}" alt="${esc(svc.title)} preview" loading="lazy">`).join('')
+           }</div>${arrows}</div>`
+      : `<div class="service-expanded__carousel">
+           <div class="service-expanded__placeholder"><span>${esc(svc.idx)}</span></div>
+         </div>`;
 
     const liveBtn = svc.liveUrl
       ? `<a class="service-expanded__live btn-pill btn-pill--solid" href="${esc(svc.liveUrl)}" target="_blank" rel="noopener">Visit live site <span class="btn-pill__arrow">\u2197</span></a>`
       : '';
 
     return `
-      <div class="service-expanded__gallery">${galleryHTML}</div>
+      ${mediaHTML}
       <div class="service-expanded__info">
         <h2>${esc(svc.title)}</h2>
         <p class="service-expanded__tags mono">${esc(svc.tags)}</p>
@@ -61,7 +70,10 @@ document.addEventListener('dom:ready', function () {
     expanded.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
 
-    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined') {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && !reduce) {
+      gsap.fromTo(expanded, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: 'power2.out' });
+
       const stateFrom = Flip.getState(triggerEl);
       triggerEl.style.visibility = 'hidden';
       const stateTo = Flip.getState(inner, { props: 'borderRadius,padding' });
@@ -82,15 +94,20 @@ document.addEventListener('dom:ready', function () {
     }
 
     ensureCloseButton();
+
+    /* sync URL */
+    window.__route && window.__route.push('/services/' + encodeURIComponent(idx));
   }
 
   function close() {
     if (!activeId) return;
+    window.__route && window.__route.home();
     const triggerEl = document.querySelector(`[data-service-id="${activeId}"]`);
 
     function finish() {
       inner.innerHTML = '';
       expanded.style.display = 'none';
+      expanded.style.opacity = '';
       expanded.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       activeId = null;
@@ -102,8 +119,10 @@ document.addEventListener('dom:ready', function () {
       }
     }
 
-    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && triggerEl) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof gsap !== 'undefined' && typeof Flip !== 'undefined' && triggerEl && !reduce) {
       gsap.set('.service-expanded__info', { clearProps: 'all' });
+      gsap.to(expanded, { opacity: 0, duration: 0.32, ease: 'power2.in' });
       const stateTo = Flip.getState(triggerEl);
       Flip.from(stateTo, {
         targets: inner,

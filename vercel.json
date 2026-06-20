@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/resume", "destination": "/fullstack resume.html" },
+    { "source": "/work/:id", "destination": "/index.html" },
+    { "source": "/services/:id", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" }
+  ]
+}

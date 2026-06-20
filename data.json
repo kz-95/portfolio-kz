@@ -1,16 +1,33 @@
 {
   "theme": {
-    "paper": "#f1f1ec",
-    "stone": "#e3e4dc",
-    "ink": "#14161b",
-    "inkSoft": "#23262c",
-    "accent": "#2b3ff2",
-    "accentDeep": "#1d2bc0",
-    "accentLite": "#7c89ff",
-    "muted": "#6b6f78",
-    "line": "rgba(20,22,27,0.14)",
-    "linePaper": "rgba(241,241,236,0.16)",
-    "geoColor": "#14161b"
+    "day": {
+      "paper": "#f1f1ec",
+      "stone": "#e3e4dc",
+      "ink": "#14161b",
+      "inkSoft": "#23262c",
+      "accent": "#2b3ff2",
+      "accentDeep": "#1d2bc0",
+      "accentLite": "#7c89ff",
+      "muted": "#6b6f78",
+      "line": "rgba(20,22,27,0.14)",
+      "linePaper": "rgba(241,241,236,0.16)",
+      "geoColor": "#14161b",
+      "onAccent": "#f1f1ec"
+    },
+    "night": {
+      "paper": "#16161a",
+      "stone": "#212127",
+      "ink": "#ededec",
+      "inkSoft": "#b4b4b0",
+      "accent": "#e8820c",
+      "accentDeep": "#ffa64d",
+      "accentLite": "#f6a948",
+      "muted": "#7a7872",
+      "line": "rgba(237,237,236,0.1)",
+      "linePaper": "rgba(237,237,236,0.08)",
+      "geoColor": "#ffffff",
+      "onAccent": "#ffffff"
+    }
   },
   "meta": {
     "title": "Kuan Zhe Huang (ZEN) - Creative Full Stack Developer, Puchong",
@@ -63,8 +80,13 @@
     "subtitle": "Connecting freelance home pros with the tenants who need them.",
     "description": "Malaysian homeowners needed <strong>trusted help</strong>. Freelance servicers needed <strong>steady work</strong>. My Home Servicer bridges both sides with a marketplace that makes booking a home pro as simple as ordering a ride.",
     "points": [
-      "Two-sided marketplace connecting freelance servicers with tenants needing trusted help, built with Angular and Express.js. Gated role architecture across guest, customer, servicer, and admin portals, each secured with route guards and JWT middleware authority layers on both frontend and backend.",
-      "Quote-to-payment in one continuous flow with real-time order tracking across six status states, backed by an escrow-aware REST API. 30+ categories spanning 7 verticals from cleaning and repair to tech support, all wrapped in a responsive interface that scales from mobile to desktop."
+      "Two-sided marketplace connecting freelance servicers with tenants who need trusted help.",
+      "Built end to end with Angular on the frontend and Express.js on the backend.",
+      "Gated role architecture across guest, customer, servicer, and admin portals.",
+      "Secured with route guards and JWT middleware authority layers on both ends.",
+      "Quote-to-payment in one flow with real-time tracking across six order states.",
+      "Escrow-aware REST API powering 30+ categories across 7 service verticals.",
+      "Fully responsive interface that scales from mobile to desktop."
     ],
     "meta": {
       "role": "Full Stack Developer",
@@ -76,14 +98,14 @@
       "label": "Explore the live product",
       "url": "https://myhomeservicer.pages.dev"
     },
-    "gallery": [],
+    "gallery": ["img/mhs-browser.png", "img/mhs-phone.png", "img/placeholder-1.svg"],
     "mockupBrowser": "img/mhs-browser.png",
     "mockupPhone": "img/mhs-phone.png",
     "stats": [
       { "value": 4, "label": "gated role layers" },
       { "value": 7, "label": "service verticals" },
-      { "value": "30+", "label": "service categories" },
-      { "value": 49, "label": "data models" }
+      { "value": 30, "suffix": "+", "label": "service categories" },
+      { "value": 40, "suffix": "++", "label": "data models" }
     ]
   },
   "works": {
@@ -92,43 +114,70 @@
       {
         "id": "co-bug-dump",
         "title": "Co-Bug Dump",
-        "year": "2025",
+        "year": "MAY 2026",
         "tags": "OFFLINE TOOL \u00b7 AI \u00b7 BUG TRACKER",
-        "thumbStyle": "thumb-kopi",
-        "thumbInitials": "CB",
-        "url": "https://github.com/AllergicToAnything",
-        "gallery": [],
+        "thumbStyle": "thumb-invoice",
+        "thumbInitials": "CBD",
+        "url": "https://github.com/AllergicToAnything/co-bug-dump",
+        "gallery": [
+          "img/placeholder-1.svg",
+          "img/placeholder-2.svg",
+          "img/placeholder-3.svg"
+        ],
         "description": "Offline-first AI bug tracker built as a developer tool. Search, categorize, and resolve bugs without an internet connection.",
-        "liveUrl": "https://github.com/AllergicToAnything"
+        "liveUrl": "https://github.com/AllergicToAnything/co-bug-dump"
       },
       {
-        "id": "ssg-resume",
-        "title": "SSG Resume Template",
-        "year": "2026",
-        "tags": "STATIC SITE \u00b7 OPEN SOURCE \u00b7 TEMPLATE",
-        "thumbStyle": "thumb-sewa",
-        "thumbInitials": "SR",
-        "url": "https://github.com/AllergicToAnything",
-        "gallery": [],
-        "description": "Static site generator resume template. Fast, customizable, deploy anywhere. Zero build step, pure HTML/CSS/JS.",
-        "liveUrl": "https://github.com/AllergicToAnything"
+        "id": "senang-invoice",
+        "title": "Senang Invoice",
+        "year": "JUN 2026",
+        "tags": "MOBILE APP \u00b7 E-INVOICE SOLUTION \u00b7 SME HELPER",
+        "thumbStyle": "thumb-resume",
+        "thumbInitials": "SI",
+        "url": "https://senang-invoice.vercel.app/",
+        "gallery": [
+          "img/placeholder-2.svg",
+          "img/placeholder-1.svg",
+          "img/placeholder-3.svg"
+        ],
+        "description": "Local-first Malaysian e-invoice app that turns a photo, voice note, or quick input into MyInvois-valid invoices. AI auto-classifies line items and submits to IRBM in one click, generating a QR code and PDF instantly - all while data stays on your device.",
+        "liveUrl": "https://senang-invoice.vercel.app/"
+      },
+      {
+        "id": "zen-resume",
+        "title": "Zen Resume",
+        "year": "APR 2026",
+        "tags": "INTERACTIVE RESUME \u00b7 WEBGL \u00b7 PORTFOLIO",
+        "thumbStyle": "thumb-bug",
+        "thumbInitials": "ZR",
+        "url": "https://zen-resume.pages.dev/",
+        "gallery": [
+          "img/placeholder-3.svg",
+          "img/placeholder-1.svg",
+          "img/placeholder-2.svg"
+        ],
+        "description": "Interactive resume and portfolio for a creative full-stack developer. A WebGL booting intro opens into a filterable project gallery spanning game, shader, 3D, and web work - all in one playful single-page experience.",
+        "liveUrl": "https://zen-resume.pages.dev/"
       }
     ]
   },
   "about": {
     "sectionLabel": "(03) - ABOUT",
     "portrait": "img/zen-portrait-transparent.png",
+    "portraitPosition": "50% 30%",
     "titleLines": [
-      "Apa khabar! I'm ZEN -",
-      "I build things where",
-      "code meets craft."
+      "Apa khabar!",
+      "I'm Zen, ",
+      "build things where code meets craft."
     ],
-    "bio": "Six years across game studios and startups taught me one thing: the best products live at the intersection of engineering and art. From AAA 3D environments to full-stack marketplaces, I bring VFX precision to code - sweating the architecture, the shaders, the micro-interactions - the <em>rasa</em> of a product.",
+    "bio": "Six years across the spectrum. <strong>Indie studios</strong>, <strong>SME team</strong>, <strong>startup</strong>, and <strong>structured MNC</strong>. I build products end to end Angular and React on the frontend, Node and Express on the backend, REST APIs that scale, and databases that stay out of the way. When I'm not shipping web apps, I'm deep in Unity, Unreal, Shader work, where I honed the precision I bring to every line of code.",
     "portraitCaption": "ZEN - PUCHONG, MY",
+    "resume": "/resume",
+    "resumeLabel": "View résumé",
     "stats": [
       { "value": 6, "label": "years in the industry" },
-      { "value": 8, "label": "shipped projects" },
-      { "value": 5, "label": "languages spoken" },
+      { "value": 11, "label": "shipped projects" },
+      { "value": 4, "label": "languages spoken" },
       { "value": "\u221e", "label": "coffees in veins" }
     ]
   },
@@ -140,16 +189,24 @@
         "title": "Full Stack Development",
         "tags": "ANGULAR \u00b7 REACT \u00b7 REST API \u00b7 NODE.JS \u00b7 TYPESCRIPT",
         "behavior": "detail",
-        "gallery": [],
+        "gallery": [
+          "img/placeholder-1.svg",
+          "img/placeholder-2.svg",
+          "img/placeholder-3.svg"
+        ],
         "description": "End-to-end web applications - from database schema to deployment. I build products that ship.",
         "liveUrl": ""
       },
       {
         "idx": "02",
         "title": "Tool Creation & Automation",
-        "tags": "PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
+        "tags": "PRODUCTIVITY TOOLS \u00b7 PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
         "behavior": "detail",
-        "gallery": [],
+        "gallery": [
+          "img/placeholder-2.svg",
+          "img/placeholder-3.svg",
+          "img/placeholder-1.svg"
+        ],
         "description": "Custom tools that accelerate workflows and eliminate repetitive tasks.",
         "liveUrl": ""
       },
@@ -158,7 +215,11 @@
         "title": "Game Development",
         "tags": "UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 GAMEPLAY SYSTEMS",
         "behavior": "detail",
-        "gallery": [],
+        "gallery": [
+          "img/placeholder-3.svg",
+          "img/placeholder-1.svg",
+          "img/placeholder-2.svg"
+        ],
         "description": "AAA gameplay systems, editor tools, and real-time 3D experiences.",
         "liveUrl": ""
       },
@@ -172,8 +233,8 @@
       },
       {
         "idx": "05 External Link",
-        "title": "3D",
-        "tags": "3DS MAX \u00b7 MAYA \u00b7 SUBSTANCE",
+        "title": "2D & 3D",
+        "tags": "KRITA \u00b7 3DS MAX \u00b7 MAYA \u00b7 SUBSTANCE PAINTER \u00b7 SUBSTANCE DESIGNER",
         "behavior": "external",
         "url": "https://kze.artstation.com",
         "targetBlank": true
@@ -190,13 +251,15 @@
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/zenkuan/" },
       { "label": "GitHub", "url": "https://github.com/AllergicToAnything" },
       { "label": "ArtStation", "url": "https://kze.artstation.com" },
+      { "label": "VFX Carrd", "url": "https://zenkuan.carrd.co" },
+
       { "label": "Instagram", "url": "https://www.instagram.com/zen.k.z/" }
     ],
     "formspree": {
       "formId": "mjgdnrrz",
       "endpoint": "https://formspree.io/f/mjgdnrrz",
-      "subjectTemplate": "Portfolio inquiry from {email}",
-      "bodyTemplate": "Hi Zen,\n\nI came across your portfolio and wanted to connect.\n\n- {email}"
+      "subjectTemplate": "Portfolio inquiry from {name}",
+      "bodyTemplate": "Hello, I'm {name}. I find your website interesting and would like to hire you.\n\nReach me at {email}."
     }
   },
   "footer": {

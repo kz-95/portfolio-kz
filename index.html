@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <base href="/">
   <title>Kuan Zhe Huang (ZEN) - Creative Full Stack Developer, Puchong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
@@ -13,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,400;0,9..144,560;0,9..144,640;1,9..144,340;1,9..144,460&family=Archivo:wght@400;500;600&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
 
@@ -40,10 +41,30 @@
         <!-- filled by render.js -->
       </nav>
     </div>
+    <div class="nav__actions">
+    <label class="theme-switch" aria-label="Toggle dark mode">
+      <input type="checkbox" class="theme-switch__checkbox">
+      <div class="theme-switch__container">
+        <div class="theme-switch__clouds"></div>
+        <div class="theme-switch__stars">
+          <svg viewBox="0 0 144 55" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M135.8 3C135 3.9 134.1 4.3 133 4.4 134.1 4.4 135 4.9 135.8 5.7s1 1.9 1 3c0-.7.2-1.4.5-2.1.4-.7.8-1.2 1.5-1.6.6-.4 1.3-.6 2-.6-1.1 0-2-.5-2.8-1.3-.8-.9-1.2-1.8-1.2-3 0 1.2-.4 2.2-1.2 3zM31 23.4c1.1 0 2-.5 2.8-1.3.8-.9 1.2-1.9 1.2-3 0 1.2.4 2.2 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1 1-1.5 1.6-.3.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3S32 23.3 31 23.4zM0 36.4c1.1 0 2-.5 2.8-1.3.8-.9 1.2-1.9 1.2-3 0 1.2.4 2.2 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1 1-1.5 1.6-.3.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3S1.1 36.4 0 36.4zM56.8 24c-.7.9-1.7 1.3-2.8 1.4 1.1 0 2 .5 2.8 1.3.8.9 1.2 1.9 1.2 3 0-.7.2-1.4.5-2.1.4-.7.8-1.2 1.5-1.6.6-.4 1.3-.6 2-.6-1.1 0-2-.5-2.8-1.3-.8-.9-1.2-1.9-1.2-3 0 1.2-.4 2.2-1.2 3zM81 25.4c1.1 0 2-.5 2.8-1.3.8-.9 1.2-1.9 1.2-3 0 1.2.4 2.2 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1 1-1.5 1.6-.3.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3s-1.7-1.3-2.8-1.4zM136 36.4c1.1 0 2-.5 2.8-1.3.8-.9 1.2-1.9 1.2-3 0 1.2.4 2.2 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1 1-1.5 1.6-.3.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3s-1.7-1.3-2.8-1.4zM101.8 49c-.7.9-1.7 1.3-2.8 1.4 1.1 0 2 .5 2.8 1.3.8.9 1.2 1.9 1.2 3 0-.7.2-1.4.5-2.1.4-.7.8-1.2 1.5-1.6.6-.4 1.3-.6 2-.6-1.1 0-2-.5-2.8-1.3-.8-.9-1.2-1.9-1.2-3 0 1.2-.4 2.2-1.2 3z" fill="currentColor"/></svg>
+        </div>
+        <div class="theme-switch__circle">
+          <div class="theme-switch__sun-moon">
+            <div class="theme-switch__moon">
+              <div class="theme-switch__spot"></div>
+              <div class="theme-switch__spot"></div>
+              <div class="theme-switch__spot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </label>
     <a class="nav__cta btn-pill" href="#contact" data-magnetic data-contact-cta>Let's talk <span class="btn-pill__arrow">→</span></a>
     <button class="nav__burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span>
     </button>
+    </div>
   </header>
 
   <!-- Mobile menu -->
@@ -66,6 +87,7 @@
     <section class="hero" aria-label="Intro">
       <div class="hero-arch" aria-hidden="true">
         <canvas class="hero-arch__canvas"></canvas>
+        <div class="hero-arch__overlay"></div>
       </div>
       <div class="hero__inner">
         <p class="hero__eyebrow mono reveal-up"><!-- filled --></p>
@@ -105,7 +127,7 @@
           <a class="btn-pill btn-pill--paper reveal-up" href="#" target="_blank" rel="noopener" data-magnetic><!-- filled --></a>
         </div>
 
-        <div class="case__stage" data-cursor="view">
+        <div class="case__stage" data-cursor="view" data-work-id="my-home-servicer">
           <div class="mhs-browser" data-parallax="-40">
             <div class="mhs-browser__bar">
               <i></i><i></i><i></i>
@@ -115,8 +137,10 @@
           </div>
 
           <div class="mhs-phone" data-parallax="60">
-            <div class="mhs-phone__notch"></div>
-            <img class="mhs-phone__img" src="" alt="My Home Servicer phone screenshot">
+            <div class="mhs-phone__screen">
+              <div class="mhs-phone__notch"></div>
+              <img class="mhs-phone__img" src="" alt="My Home Servicer phone screenshot">
+            </div>
           </div>
         </div>
       </div>
@@ -138,12 +162,14 @@
       <div class="about__grid">
         <div class="about__portrait reveal-fade" aria-hidden="true">
           <canvas class="about__shader"></canvas>
+          <div class="about__shader-overlay"></div>
           <div class="about__portrait-art"></div>
           <p class="mono"><!-- filled --></p>
         </div>
         <div class="about__copy">
           <h2 class="about__title"><!-- filled --></h2>
           <p class="reveal-up"><!-- filled --></p>
+          <a class="about__resume btn-pill btn-pill--solid reveal-up" target="_blank" rel="noopener" hidden><!-- filled --></a>
           <div class="about__stats"><!-- filled --></div>
         </div>
       </div>
@@ -175,19 +201,42 @@
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
+  <!-- Theme toggle -->
+  <script src="js/theme.js?v=20"></script>
   <!-- Data & render (non-module, runs first) -->
-  <script src="js/data.js"></script>
-  <script src="js/selectors.js"></script>
-  <script src="js/render.js"></script>
+  <script src="js/data.js?v=20"></script>
+  <script src="js/selectors.js?v=20"></script>
+  <script src="js/render.js?v=20"></script>
 
   <!-- Interaction modules -->
-  <script src="js/contact-modal.js"></script>
-  <script src="js/work-detail.js"></script>
-  <script src="js/service-detail.js"></script>
+  <script src="js/router.js?v=20"></script>
+  <script src="js/contact-modal.js?v=20"></script>
+  <script src="js/work-detail.js?v=20"></script>
+  <script src="js/service-detail.js?v=20"></script>
+  <script src="js/hacker-decode.js?v=20"></script>
 
   <!-- Main (adapted to dom:ready) -->
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js?v=20"></script>
+
+  <!-- Local-only dev resizer (no-op on deployed site; files are gitignored) -->
+  <script>
+    (function () {
+      var h = location.hostname, p = location.port;
+      var isLocal = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(h) ||
+        /^(192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h) ||
+        ['4173', '8899', '5173', '5500', '3000'].indexOf(p) !== -1 ||
+        location.search.indexOf('dev') !== -1;
+      if (!isLocal) return;
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = 'css/dev-overrides.css';
+      document.head.appendChild(l);
+      import('./js/dev/index.js?t=' + Date.now()).catch(function (e) {
+        console.error('[dev-resizer] failed to load ./js/dev/index.js — is the folder served? (do not use a built dist/)', e);
+      });
+    })();
+  </script>
 </body>
 </html>

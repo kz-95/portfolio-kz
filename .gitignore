@@ -1,9 +1,14 @@
 # Claude / tooling
 .claude/
 .gstack/
+.omc/
 tools/
 chat-export.md
 run.bat
+
+# Local-only dev resizer tool (never deployed)
+js/dev/
+css/dev-overrides.css
 
 # OS
 .DS_Store

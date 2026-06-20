@@ -7,10 +7,24 @@ document.addEventListener('dom:ready', function () {
   const panel     = modal.querySelector('.contact-modal__panel');
   const closeBtn  = modal.querySelector('.contact-modal__close');
   const form      = modal.querySelector('.contact-modal__form');
+  const nameInp   = modal.querySelector('#cm-name');
   const emailInp  = modal.querySelector('#cm-email');
   const subjectInp = modal.querySelector('#cm-subject');
   const bodyTxt   = modal.querySelector('#cm-body');
-  const errEl     = modal.querySelector('.contact-modal__error');
+  const nameErr   = modal.querySelector('.contact-modal__error[data-for="name"]');
+  const emailErr  = modal.querySelector('.contact-modal__error[data-for="email"]');
+  const waLink    = modal.querySelector('.contact-modal__alt a');
+  const WA_NUMBER = '60182862739';
+  const WA_SITE   = 'https://kz-95.vercel.app/';
+
+  function updateWhatsApp() {
+    if (!waLink) return;
+    const name = (nameInp?.value || '').trim();
+    const msg = name.length >= 2
+      ? `Hello Zen, I'm ${name}. I came across your portfolio website ${WA_SITE} and would like to hire you.`
+      : `Hi Zen! I came across your portfolio website ${WA_SITE} and I'm interested in hiring you.`;
+    waLink.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  }
   const submitBtn = modal.querySelector('.contact-modal__submit');
   const submitText = submitBtn?.querySelector('.contact-modal__submit-text');
   const spinner   = submitBtn?.querySelector('.contact-modal__spinner');
@@ -50,13 +64,16 @@ document.addEventListener('dom:ready', function () {
 
     /* Reset */
     resetForm();
-    const em = document.getElementById('cm-email');
-    em?.focus();
+    nameInp?.focus();
+
+    /* sync URL */
+    window.__route && window.__route.push('/contact');
   }
 
   function close() {
     if (!isOpen) return;
     isOpen = false;
+    window.__route && window.__route.home();
 
     document.body.style.overflow = '';
 
@@ -80,7 +97,9 @@ document.addEventListener('dom:ready', function () {
 
   function resetForm() {
     form?.reset();
-    if (errEl) errEl.textContent = '';
+    if (nameErr) nameErr.textContent = '';
+    if (emailErr) emailErr.textContent = '';
+    updateWhatsApp();
     if (subjectInp) subjectInp.value = '';
     if (bodyTxt) bodyTxt.value = '';
     if (successEl) successEl.hidden = true;
@@ -94,14 +113,18 @@ document.addEventListener('dom:ready', function () {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  function autoFill(email) {
+  function fillTemplate(tpl) {
+    const name = (nameInp?.value || '').trim() || 'someone';
+    const email = (emailInp?.value || '').trim();
+    return (tpl || '').split('{name}').join(name).split('{email}').join(email);
+  }
+
+  function autoFill() {
     const d = window.__data;
     if (!d || !d.contact || !d.contact.formspree) return;
     const fs = d.contact.formspree;
-    const subj = subjectInp || document.getElementById('cm-subject');
-    const body = bodyTxt || document.getElementById('cm-body');
-    if (subj) subj.value = (fs.subjectTemplate || '').replace('{email}', email);
-    if (body) body.value = (fs.bodyTemplate || '').replace('{email}', email);
+    if (subjectInp) subjectInp.value = fillTemplate(fs.subjectTemplate);
+    if (bodyTxt) bodyTxt.value = fillTemplate(fs.bodyTemplate);
   }
 
   function setLoading(isLoading) {
@@ -109,47 +132,46 @@ document.addEventListener('dom:ready', function () {
     submitBtn.disabled = isLoading;
     if (submitText) submitText.hidden = isLoading;
     if (spinner) spinner.hidden = !isLoading;
-    const em = emailInp || document.getElementById('cm-email');
-    if (em) em.disabled = isLoading;
-    subjectInp && (subjectInp.disabled = isLoading);
-    bodyTxt && (bodyTxt.disabled = isLoading);
+    if (nameInp) nameInp.disabled = isLoading;
+    if (emailInp) emailInp.disabled = isLoading;
   }
 
-  /* auto-fill on blur AND input for real-time feedback */
-  function handleEmailChange() {
-    const inp = document.getElementById('cm-email');
-    if (!inp) return;
-    const email = inp.value.trim();
-    const field = inp.closest('.contact-modal__field');
-    if (errEl) errEl.textContent = '';
-    if (!email) return;
-    if (!validateEmail(email)) {
-      if (errEl) errEl.textContent = 'Please enter a valid email address';
+  /* live validation + template fill */
+  function handleChange() {
+    const email = (emailInp?.value || '').trim();
+    if (emailErr) emailErr.textContent = '';
+    if (nameErr) nameErr.textContent = '';
+    if (email && !validateEmail(email)) {
+      const field = emailInp.closest('.contact-modal__field');
+      if (emailErr) emailErr.textContent = 'Please enter a valid email address';
       if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
-    } else {
-      autoFill(email);
     }
+    autoFill();
+    updateWhatsApp();
   }
 
-  const em = emailInp || document.getElementById('cm-email');
-  if (em) {
-    em.addEventListener('blur', handleEmailChange);
-    em.addEventListener('input', handleEmailChange);
-  }
+  [nameInp, emailInp].forEach((inp) => {
+    if (!inp) return;
+    inp.addEventListener('blur', handleChange);
+    inp.addEventListener('input', handleChange);
+  });
 
   /* submit */
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const em = document.getElementById('cm-email');
-    const field = em?.closest('.contact-modal__field');
-    const email = em?.value.trim();
-    if (!email || !validateEmail(email)) {
-      if (errEl) errEl.textContent = 'Please enter a valid email address';
+    const name = (nameInp?.value || '').trim();
+    const email = (emailInp?.value || '').trim();
+    const invalidate = (inp, errSpan, msg) => {
+      const field = inp?.closest('.contact-modal__field');
+      if (errSpan) errSpan.textContent = msg;
       if (field) { field.classList.add('is-invalid'); setTimeout(() => field.classList.remove('is-invalid'), 500); }
-      em?.focus();
-      return;
-    }
-    if (errEl) errEl.textContent = '';
+      inp?.focus();
+    };
+    if (!name) { invalidate(nameInp, nameErr, 'Please enter your name'); return; }
+    if (!email || !validateEmail(email)) { invalidate(emailInp, emailErr, 'Please enter a valid email address'); return; }
+    if (nameErr) nameErr.textContent = '';
+    if (emailErr) emailErr.textContent = '';
+    autoFill();
 
     const d = window.__data;
     const endpoint = d?.contact?.formspree?.endpoint;
