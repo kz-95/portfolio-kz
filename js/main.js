@@ -265,11 +265,11 @@ function initAll() {
         ringX(e.clientX); ringY(e.clientY);
       });
 
-      /* FIX #1: cursor label explicitly set on enter/leave */
+      /* FIX #1: cursor label — VIEW for viewable, CLICK for clickable */
       document.querySelectorAll('[data-cursor]').forEach((el) => {
         el.addEventListener('pointerenter', () => {
           const kind = el.dataset.cursor;
-          cursor.classList.add(kind === 'view' ? 'is-view' : 'is-hover');
+          cursor.classList.add('is-view');
           if (label) label.textContent = kind === 'view' ? 'VIEW' : 'CLICK';
         });
         el.addEventListener('pointerleave', () => {
@@ -278,14 +278,14 @@ function initAll() {
         });
       });
 
-      /* FIX #2: clickable items show CLICK label */
+      /* FIX #2: clickable items get same big ring + CLICK label */
       document.querySelectorAll('a, button, .work-card').forEach((el) => {
         el.addEventListener('pointerenter', () => {
-          cursor.classList.add('is-hover');
+          cursor.classList.add('is-view');
           if (label && !el.dataset.cursor) label.textContent = 'CLICK';
         });
         el.addEventListener('pointerleave', () => {
-          cursor.classList.remove('is-hover');
+          cursor.classList.remove('is-view', 'is-hover');
           if (label && !el.dataset.cursor) label.textContent = '';
         });
       });
