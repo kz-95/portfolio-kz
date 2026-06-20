@@ -265,12 +265,17 @@ function initAll() {
         ringX(e.clientX); ringY(e.clientY);
       });
 
-      /* FIX #1: cursor label — VIEW for viewable, CLICK for clickable */
+      /* FIX #1: cursor label — VIEW for viewable (big ring), CLICK for clickable (smaller ring) */
       document.querySelectorAll('[data-cursor]').forEach((el) => {
         el.addEventListener('pointerenter', () => {
           const kind = el.dataset.cursor;
-          cursor.classList.add('is-view');
-          if (label) label.textContent = kind === 'view' ? 'VIEW' : 'CLICK';
+          if (kind === 'view') {
+            cursor.classList.add('is-view');
+            if (label) label.textContent = 'VIEW';
+          } else {
+            cursor.classList.add('is-hover');
+            if (label) label.textContent = 'CLICK';
+          }
         });
         el.addEventListener('pointerleave', () => {
           cursor.classList.remove('is-view', 'is-hover');
@@ -278,14 +283,14 @@ function initAll() {
         });
       });
 
-      /* FIX #2: clickable items get same big ring + CLICK label */
+      /* FIX #2: clickable items — smaller ring + CLICK label */
       document.querySelectorAll('a, button, .work-card').forEach((el) => {
         el.addEventListener('pointerenter', () => {
-          cursor.classList.add('is-view');
+          cursor.classList.add('is-hover');
           if (label && !el.dataset.cursor) label.textContent = 'CLICK';
         });
         el.addEventListener('pointerleave', () => {
-          cursor.classList.remove('is-view', 'is-hover');
+          cursor.classList.remove('is-hover');
           if (label && !el.dataset.cursor) label.textContent = '';
         });
       });
