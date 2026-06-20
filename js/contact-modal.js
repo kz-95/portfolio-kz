@@ -48,9 +48,14 @@ document.addEventListener('dom:ready', function () {
       gsap.to(panel, { scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out', delay: 0.05 });
     }
 
-    /* Reset form */
+    /* Reset + pre-fill */
     resetForm();
-    const em = emailInp || document.getElementById('cm-email');
+    /* pre-fill with default email as hint */
+    const subj = document.getElementById('cm-subject');
+    const body = document.getElementById('cm-body');
+    if (subj) subj.value = 'Type your email above to auto-fill';
+    if (body) body.value = 'Type your email above to auto-fill';
+    const em = document.getElementById('cm-email');
     em?.focus();
   }
 
