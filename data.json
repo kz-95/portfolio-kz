@@ -54,25 +54,25 @@
     "ctaSecondary": { "label": "Featured work", "href": "#work" },
     "scrollText": "SCROLL"
   },
-  "bandText": "FULL STACK \u25c6 GAME DEV \u25c6 3D & VFX \u25c6 UNITY \u25c6 ANGULAR \u25c6 REACT \u25c6 GLSL \u25c6 BLENDER \u25c6",
+  "bandText": "FULL STACK \u25c6 GAME DEV \u25c6 3D \u25c6 VFX \u25c6 UNITY \u25c6 ANGULAR \u25c6 REACT \u25c6 GLSL \u25c6 HLSL \u25c6 SHADER \u25c6 REST API \u25c6 FRONTEND \u25c6 BACKEND ",
   "caseStudy": {
     "id": "my-home-servicer",
     "sectionLabel": "(01) - FEATURED CASE STUDY",
     "titleLine1": "My Home",
     "titleLine2": "Servicer",
-    "subtitle": "Malaysia's friendly way to book trusted home pros.",
-    "description": "A full-stack marketplace connecting Malaysian homeowners with vetted servicers across <strong>25+ categories</strong> - built with Angular and Express.js. I engineered the platform end-to-end: REST APIs, real-time order tracking, an AI help assistant, and a quote-to-payment flow across 7 service verticals.",
+    "subtitle": "Connecting freelance home pros with the tenants who need them.",
+    "description": "Malaysian homeowners needed trusted help. Freelance servicers needed steady work. My Home Servicer bridges both sides with a marketplace that makes booking a home pro as simple as ordering a ride.",
     "points": [
-      "Quote \u2192 booking \u2192 payment in one continuous flow",
-      "Live order tracking across six status states",
-      "AI Help Assistant for quotes, bookings & reorders",
-      "7 verticals - cleaning, repair, maintenance, improvement, training, events, tech"
+      "Two-sided marketplace — steady work for freelance servicers, trusted help for tenants · Angular + Express.js",
+      "Gated role architecture — guest, customer, servicer, admin portals, each with route guards + JWT middleware",
+      "Quote-to-payment in one flow — real-time order tracking across six status states, escrow-backed · REST API",
+      "30+ categories across 7 verticals — cleaning, repair, maintenance, improvement, training, events, tech · Responsive web app"
     ],
     "meta": {
       "role": "Full Stack Developer",
       "scope": "Angular \u00b7 Express.js \u00b7 REST API",
       "platform": "Responsive web app",
-      "year": "2025 \u2013 26"
+      "year": "JUNE 2026"
     },
     "cta": {
       "label": "Explore the live product",
@@ -82,9 +82,9 @@
     "mockupBrowser": "img/mhs-browser.png",
     "mockupPhone": "img/mhs-phone.png",
     "stats": [
-      { "value": 25, "label": "+ service categories" },
+      { "value": 4, "label": "gated role layers" },
+      { "value": 30, "label": "+ service categories" },
       { "value": 7, "label": "service verticals" },
-      { "value": 6, "label": "order status states" },
       { "value": 1, "label": "seamless quote-to-pay flow" }
     ]
   },
