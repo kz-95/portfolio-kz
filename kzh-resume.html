@@ -151,7 +151,7 @@
     flex-wrap:wrap;
     margin-top:1px;
   }
-  .proj-stack{font-size:12.5px;color:var(--muted);font-style:italic;}
+  .proj-stack{font-size:12.5px;color:var(--muted);font-style:italic;flex:1 1 auto;min-width:0;}
   .proj-date{font-style:normal;font-weight:700;color:var(--accent);}
   .proj-tag{
     font-size:11.5px;
@@ -213,25 +213,27 @@
   ul.plain.two-col li{break-inside:avoid;}
 
   /* ---------- Print ---------- */
-  @page{ size: A4; margin: 0; }
+  @page{ size: A4; margin: 12mm 0; }
 
   @media print{
     *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
     html,body{background:#fff;font-size:12px;line-height:1.4;}
     .page{box-shadow:none;margin:0;max-width:100%;}
 
-    header{padding:11mm 14mm 6mm;}
+    header{padding:4mm 14mm 6mm;}
     .avatar{width:104px;height:104px;border-width:4px;}
     .head-row{gap:22px;}
     .name{font-size:27px;}
     .title{font-size:13.5px;margin-top:3px;}
     .contact{margin-top:8px;font-size:11.5px;gap:3px 0;line-height:1.5;}
 
-    main{padding:7mm 14mm 6mm;}
+    main{padding:4mm 14mm 0;}
     section{margin-bottom:8px;}
-    .project,.exp{page-break-inside:avoid;}
-    .skills-section{page-break-inside:avoid;}
-    .page2-lead{padding-top:9mm;}
+    .project,.exp,.mini{page-break-inside:avoid;break-inside:avoid;}
+    .skills-section,.sec-keep{page-break-inside:avoid;break-inside:avoid;}
+    .star li,.exp li,ul.plain li{page-break-inside:avoid;break-inside:avoid;}
+    .exp-head{page-break-inside:avoid;break-inside:avoid;page-break-after:avoid;}
+    .page2-lead{padding-top:0;}
     h2{font-size:12.5px;margin-bottom:7px;padding-bottom:4px;}
 
     .summary{font-size:12.5px;}
@@ -294,7 +296,7 @@
       <img class="avatar" src="img/Profile_Picture.png" alt="Kuan Zhe Huang">
       <div class="head-text">
         <div class="name">Kuan <span>Zhe Huang</span></div>
-        <div class="title">Junior Fullstack Web Developer</div>
+        <div class="title">AI Innovator | Automation | Fullstack Developer</div>
         <div class="contact">
           <span>Puchong, Selangor, Malaysia</span>
           <span class="sep">&nbsp;·&nbsp;</span>
@@ -302,11 +304,11 @@
           <span class="sep">&nbsp;·&nbsp;</span>
           <span><a href="mailto:coffeeinveins@gmail.com">coffeeinveins@gmail.com</a></span>
           <span class="sep">&nbsp;·&nbsp;</span>
-          <span><a href="https://github.com/allergictoanything">github.com/allergictoanything</a></span>
+          <span><a href="https://github.com/kz-95">https://github.com/kz-95</a></span>
           <span class="sep">&nbsp;·&nbsp;</span>
-          <span><a href="https://zen-resume.pages.dev">zen-resume.pages.dev</a></span>
+          <span><a href="https://kze.dpdns.org">https://kze.dpdns.org</a></span>
           <span class="sep">&nbsp;·&nbsp;</span>
-          <span><a href="https://linkedin.com/in/zenkuan/">linkedin.com/in/zenkuan</a></span>
+          <span><a href="https://linkedin.com/in/zenkuan/">https://linkedin.com/in/zenkuan</a></span>
         </div>
       </div>
     </div>
@@ -319,9 +321,10 @@
       <p class="summary">
         I build and ship full web applications end to end - Angular and clean HTML/CSS up front,
         C# and Python behind the scenes, PostgreSQL for data. I design REST APIs, deliver clean CRUD
-        features, and deploy with Docker, Git, Cloudflare, and Railway. I solve problems fast, learn
-        new tools quickly, and adapt to whatever the work demands. Driven to grow long-term and
-        working toward PMP certification, sharpening both my engineering and project-leadership skills.
+        features, and deploy with Docker, Git, Cloudflare, and Railway. I solve problems fast, pick up
+        new tools quickly, and increasingly build with AI and agentic tools - Claude, n8n, and Higgsfield -
+        to automate real workflows. Driven to grow long-term and build innovative tools that help small
+        and medium businesses automate and streamline their operations.
       </p>
     </section>
 
@@ -329,12 +332,32 @@
     <section>
       <h2>Projects</h2>
 
-      <!-- Project 1: Co-Bug Dump -->
+      <!-- Project 1: Senang Invoice -->
+      <div class="project">
+        <div class="proj-head">
+          <div class="proj-name">Senang Invoice - AI Malaysian E-Invoice App <span class="proj-date">Jun 2026</span></div>
+          <div class="proj-meta">
+            <a class="proj-link" href="https://senang-invoice.vercel.app">https://senang-invoice.vercel.app</a>
+          </div>
+        </div>
+        <div class="proj-stackrow">
+          <div class="proj-stack">AI Classification · MyInvois / IRBM · Local-First · PDF &amp; QR · Android APK</div>
+          <span class="proj-tag">Mobile · AI · E-Invoice</span>
+        </div>
+        <ul class="star">
+          <li>Built a local-first Malaysian e-invoice app that turns a photo, voice note, or quick input into MyInvois-valid invoices, aimed at SMEs who find the official e-invoicing flow slow and confusing.</li>
+          <li>Designed an AI layer that auto-classifies line items and prepares the invoice, then submits to IRBM in one click - instantly generating the validated QR code and PDF.</li>
+          <li>Kept data on the user's device (local-first) for privacy and offline use, so invoices can be drafted anywhere and pushed to IRBM when ready.</li>
+          <li>Focused the whole flow on speed and a mobile-first experience, cutting a multi-step compliance task down to a few taps for non-technical business owners.</li>
+        </ul>
+      </div>
+
+      <!-- Project 2: My Home Servicer -->
       <div class="project">
         <div class="proj-head">
           <div class="proj-name">My Home Servicer - Home Services Booking Platform <span class="proj-date">Jun 2026</span></div>
           <div class="proj-meta">
-            <a class="proj-link" href="https://myhomeservicer.pages.dev">myhomeservicer.pages.dev</a>
+            <a class="proj-link" href="https://myhomeservicer.pages.dev">https://myhomeservicer.pages.dev</a>
           </div>
         </div>
         <div class="proj-stackrow">
@@ -349,13 +372,10 @@
         </ul>
       </div>
 
-      <!-- Project 2: Co-Bug Dump -->
+      <!-- Project 3: QuickBeak -->
       <div class="project">
         <div class="proj-head">
-          <div class="proj-name">Co-Bug Dump - AI-Assisted Bug &amp; Task Tracker <span class="proj-date">May 2026</span></div>
-          <div class="proj-meta">
-            <a class="proj-link" href="https://github.com/AllergicToAnything/co-bug-dump">github.com/AllergicToAnything/co-bug-dump</a>
-          </div>
+          <div class="proj-name">QuickBeak - AI-Assisted Bug &amp; Task Tracker <span class="proj-date">May 2026</span></div>
         </div>
         <div class="proj-stackrow">
           <div class="proj-stack">HTML · CSS · JavaScript · Google Sheets · Apps Script · LLM API / Ollama · Mobile-First CSS</div>
@@ -370,32 +390,12 @@
         </ul>
       </div>
 
-      <!-- Project 3: SSG-Resume -->
-      <div class="project">
-        <div class="proj-head">
-          <div class="proj-name">SSG-Resume - Resume &amp; Portfolio Template Site <span class="proj-date">Apr 2026</span></div>
-          <div class="proj-meta">
-            <a class="proj-link" href="https://ssg-resume.pages.dev">ssg-resume.pages.dev</a>
-          </div>
-        </div>
-        <div class="proj-stackrow">
-          <div class="proj-stack">HTML · CSS · JavaScript · JSON-Driven UI · Git · Cloudflare Pages</div>
-          <span class="proj-tag">Frontend · JSON-Driven · Deployment</span>
-        </div>
-        <ul class="star">
-          <li>Started as a Git fundamentals exercise in my AGMO training (init, clone, branch, merge, push/pull, remote/origin) that I saw real potential in, so I turned it into something I'd actually use.</li>
-          <li>Built it into a reusable resume and portfolio template because no-code builders like Wix and Carrd felt too limiting, and I wanted full control over the design plus a place to keep my achievements up to date.</li>
-          <li>Made it fully data-driven: you edit one JSON file and the site updates itself, auto-generating the filters, types, and tags from your arrays instead of hand-adding elements every time.</li>
-          <li>Set up Git-push to Cloudflare Pages auto-deploy so every change goes live on its own, and built it so any developer can fork it and have a clean, animated portfolio running with minimal setup.</li>
-        </ul>
-      </div>
-
       <!-- Project 4: More Projects -->
       <div class="project page2-lead">
         <div class="proj-head">
           <div class="proj-name">Additional Projects <span class="proj-date">2018 – Present</span></div>
           <div class="proj-meta">
-            <a class="proj-link" href="https://zen-resume.pages.dev/portfolio">zen-resume.pages.dev/portfolio</a>
+            <a class="proj-link" href="https://kze.dpdns.org/portfolio">https://kze.dpdns.org/portfolio</a>
           </div>
         </div>
         <div class="proj-stackrow">
@@ -405,7 +405,7 @@
         <ul class="star">
           <li>A portfolio I've been building since 2018, showing my path from 3D modeling and rendering into game development, then VFX, and now web apps, across AAA, indie, MNC, and SME work.</li>
           <li>Notable contributions include the Medal of Honor: Above and Beyond VR port, Operatives Revolve, the Sunway interactive project, and the Setia Alam e-brochure project.</li>
-          <li>Live demos, case studies, and source links are kept current at zen-resume.pages.dev/portfolio and zenkuan.carrd.co.</li>
+          <li>Live demos, case studies, and source links are kept current at https://kze.dpdns.org/portfolio and https://zenkuan.carrd.co.</li>
         </ul>
       </div>
     </section>
@@ -418,7 +418,8 @@
         <li><b>Frontend:</b> Angular, Pure HTML / CSS, Responsive / Mobile-First, REST consumption</li>
         <li><b>Backend:</b> C#, Python, REST API Design, CRUD Systems, PostgreSQL, API Integration</li>
         <li><b>DevOps &amp; Cloud:</b> Docker, Cloudflare Pages, Railway, CI / Deployment</li>
-        <li><b>Tools &amp; Workflow:</b> Git, GitHub, Postman, VS Code, AI-Assisted Development</li>
+        <li><b>AI &amp; Automation:</b> Claude / Anthropic, Agentic AI, n8n, Higgsfield, LLM Integration, AI-Assisted Development</li>
+        <li><b>Tools &amp; Workflow:</b> Git, GitHub, Postman, VS Code</li>
         <li><b>Core Strengths:</b> Critical Thinking, Problem Solving, Quick Learning &amp; Upskilling, Adaptability, Eager to Grow Long-Term</li>
       </ul>
     </section>
@@ -477,7 +478,7 @@
     </section>
 
     <!-- EDUCATION -->
-    <section>
+    <section class="sec-keep">
       <h2>Education</h2>
       <ul class="plain">
         <li><b>Diploma in 3D Animation</b> - Undo Academy (2017–2019)</li>
@@ -487,7 +488,7 @@
     </section>
 
     <!-- COMMUNITY INVOLVEMENT -->
-    <section>
+    <section class="sec-keep">
       <h2>Community Involvement &amp; Activities</h2>
       <ul class="plain two-col">
         <li><b>Charity Bazaar Vendor</b> (2025) - ran a booth end to end; donated proceeds and leftover stock to House of Joy children's home</li>
@@ -498,12 +499,12 @@
         <li><b>Virtuos Internal Game Jam</b> (2022) - 3D Artist / Animator</li>
         <li><b>SEA Game Jam</b> (2019) - Programmer</li>
         <li><b>Free Dev Tools</b> (2026) - sharing free tools on GitHub for the community</li>
-        <li><b>Active Roadmap</b> (2026) - Co-Bug Dump &amp; HR Scorer (ongoing side projects)</li>
+        <li><b>Active Roadmap</b> (2026) - QuickBeak &amp; HR Scorer (ongoing side projects)</li>
       </ul>
     </section>
 
     <!-- LANGUAGES -->
-    <section style="margin-bottom:0">
+    <section class="sec-keep" style="margin-bottom:0">
       <h2>Languages</h2>
       <ul class="plain">
         <li><b>English</b> - Fluent</li>

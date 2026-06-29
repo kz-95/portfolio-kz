@@ -112,20 +112,20 @@
     "sectionLabel": "(02) - SELECTED WORKS",
     "items": [
       {
-        "id": "co-bug-dump",
-        "title": "Co-Bug Dump",
+        "id": "quickbeak",
+        "title": "QuickBeak",
         "year": "MAY 2026",
         "tags": "OFFLINE TOOL \u00b7 AI \u00b7 BUG TRACKER",
         "thumbStyle": "thumb-invoice",
-        "thumbInitials": "CBD",
-        "url": "https://github.com/AllergicToAnything/co-bug-dump",
+        "thumbInitials": "QB",
+        "url": "",
         "gallery": [
           "img/placeholder-1.svg",
           "img/placeholder-2.svg",
           "img/placeholder-3.svg"
         ],
         "description": "Offline-first AI bug tracker built as a developer tool. Search, categorize, and resolve bugs without an internet connection.",
-        "liveUrl": "https://github.com/AllergicToAnything/co-bug-dump"
+        "liveUrl": ""
       },
       {
         "id": "senang-invoice",
@@ -150,14 +150,14 @@
         "tags": "INTERACTIVE RESUME \u00b7 WEBGL \u00b7 PORTFOLIO",
         "thumbStyle": "thumb-bug",
         "thumbInitials": "ZR",
-        "url": "https://zen-resume.pages.dev/",
+        "url": "https://kze.dpdns.org/",
         "gallery": [
           "img/placeholder-3.svg",
           "img/placeholder-1.svg",
           "img/placeholder-2.svg"
         ],
         "description": "Interactive resume and portfolio for a creative full-stack developer. A WebGL booting intro opens into a filterable project gallery spanning game, shader, 3D, and web work - all in one playful single-page experience.",
-        "liveUrl": "https://zen-resume.pages.dev/"
+        "liveUrl": "https://kze.dpdns.org/"
       }
     ]
   },
@@ -249,7 +249,7 @@
     "availability": "Available Q3 '26",
     "socials": [
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/zenkuan/" },
-      { "label": "GitHub", "url": "https://github.com/AllergicToAnything" },
+      { "label": "GitHub", "url": "https://github.com/kz-95" },
       { "label": "ArtStation", "url": "https://kze.artstation.com" },
       { "label": "VFX Carrd", "url": "https://zenkuan.carrd.co" },
 

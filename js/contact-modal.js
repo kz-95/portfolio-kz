@@ -15,7 +15,7 @@ document.addEventListener('dom:ready', function () {
   const emailErr  = modal.querySelector('.contact-modal__error[data-for="email"]');
   const waLink    = modal.querySelector('.contact-modal__alt a');
   const WA_NUMBER = '60182862739';
-  const WA_SITE   = 'https://kz-95.vercel.app/';
+  const WA_SITE   = 'https://kze.dpdns.org/';
 
   function updateWhatsApp() {
     if (!waLink) return;

@@ -411,7 +411,7 @@ function renderHiddenContainers() {
     const el = document.createElement('div');
     el.className = 'contact-modal';
     el.setAttribute('aria-hidden', 'true');
-    const waMsg = "Hi Zen! I came across your portfolio website https://kz-95.vercel.app/ and I'm interested in hiring you.";
+    const waMsg = "Hi Zen! I came across your portfolio website https://kze.dpdns.org/ and I'm interested in hiring you.";
     const waHref = `https://wa.me/60182862739?text=${encodeURIComponent(waMsg)}`;
     el.innerHTML = `
       <div class="contact-modal__backdrop"></div>
