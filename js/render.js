@@ -1,7 +1,16 @@
 /* render.js - populates DOM from window.__data */
-document.addEventListener('data:ready', (e) => {
-  const d = e.detail;
-  if (!d) return;
+document.addEventListener('data:ready', (e) => renderAll(e.detail));
+
+/* data.js starts its fetch before this file is parsed. Script parsing yields
+   between <script> tags, so a cached data.json can resolve - and fire
+   'data:ready' - before the listener above exists, leaving the page blank.
+   If the data already landed, render it now. */
+if (window.__data) renderAll(window.__data);
+
+let rendered = false;
+function renderAll(d) {
+  if (!d || rendered) return;
+  rendered = true;
 
   setTheme(d.theme);
   setMeta(d.meta);
@@ -17,8 +26,21 @@ document.addEventListener('data:ready', (e) => {
   renderSectionThemes(d.sections);
   renderHiddenContainers();
   startClock(d.global.timezoneIANA);
+
+  /* The interaction modules (work-detail, work-cards, service-detail, ...) are
+     parsed after this file and subscribe to 'dom:ready'. If we render during
+     parsing, those listeners do not exist yet - so hold the event until the
+     document is parsed and every module has subscribed. */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fireDomReady, { once: true });
+  } else {
+    fireDomReady();
+  }
+}
+
+function fireDomReady() {
   document.dispatchEvent(new CustomEvent('dom:ready'));
-});
+}
 
 /* theme CSS custom properties (day + night driven by data.json) */
 const THEME_VARS = {
@@ -242,13 +264,33 @@ function renderWorks(ws) {
   const items = ws.items;
   const grid = qs(S.worksGrid);
   if (!grid || !items) return;
-  grid.innerHTML = items.map((w, i) => `
+  grid.innerHTML = items.map((w, i) => {
+    const maskId = `wc-mask-${esc(w.id)}`;
+    const initials = esc(w.thumbInitials);
+    /* three stacked layers: preview gallery (bottom), shade (middle),
+       glass initials (top). The <i> is masked to the glyphs by the SVG mask,
+       so the frosted material lands on the letters themselves. */
+    return `
     <div class="work-card reveal-up" data-work-id="${esc(w.id)}" data-cursor="view">
-      <div class="work-card__thumb ${esc(w.thumbStyle)}"><span>${esc(w.thumbInitials)}</span></div>
+      <div class="work-card__thumb ${esc(w.thumbStyle)}"${previewAttr(w, 'data-preview')}>
+        <div class="work-card__preview" aria-hidden="true"></div>
+        <div class="work-card__shade" aria-hidden="true"></div>
+        <span class="work-card__initials">
+          <svg class="wc-svg" viewBox="0 0 200 160" aria-hidden="true" focusable="false">
+            <defs>
+              <mask id="${maskId}" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="160">
+                <text class="wc-mask-text" x="100" y="80">${initials}</text>
+              </mask>
+            </defs>
+            <text class="wc-outline" x="100" y="80">${initials}</text>
+          </svg>
+          <i class="work-card__glass" style="-webkit-mask:url(#${maskId});mask:url(#${maskId})"></i>
+        </span>
+      </div>
       <div class="work-card__row"><h3>${esc(w.title)}</h3><span class="mono">${esc(w.year)}</span></div>
       <p class="work-card__tags mono">${esc(w.tags)}</p>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 /* about */
@@ -303,6 +345,27 @@ function renderAbout(a) {
 }
 
 /* services */
+/* Serialise a row's media for hover preview playback.
+   Service detail rows preview their gallery; external rows preview hoverMedia.
+   Work cards read the same payload from data-preview. */
+function previewAttr(row, attr) {
+  const media = (row.gallery && row.gallery.length ? row.gallery : row.hoverMedia) || [];
+  const items = media.map(m => {
+    const isStr = typeof m === 'string';
+    if (isStr) return { t: 'image', s: m };
+    const o = { t: m.type || 'image', s: m.src || '' };
+    if (m.id) o.id = m.id;          /* youtube */
+    if (m.full) o.full = true;      /* play right through, no cap */
+    if (m.hold) o.hold = m.hold;    /* explicit dwell (a gif knows its own length; we don't) */
+    return o;
+  }).filter(m => m.s || m.id);
+
+  if (!items.length) return '';
+  /* single-quoted attribute, so only apostrophes need escaping */
+  const json = JSON.stringify(items).replace(/'/g, '&#39;');
+  return ` ${attr || 'data-svc-preview'}='${json}'`;
+}
+
 function renderServices(s) {
   if (!s) return;
   const svc = qs(S.services);
@@ -321,7 +384,7 @@ function renderServices(s) {
         ? ` data-service-external="${esc(row.url)}" data-service-target="${row.targetBlank ? '_blank' : '_self'}"`
         : '';
       return `
-        <li class="svc-row" data-cursor="plus"${dataAttrs}>
+        <li class="svc-row" data-cursor="plus"${dataAttrs}${previewAttr(row)}>
           <span class="svc-row__idx mono">${esc(row.idx)}</span>
           <h3>${esc(row.title)}</h3>
           <p class="svc-row__tags mono">${esc(row.tags)}</p>

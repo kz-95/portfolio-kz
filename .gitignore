@@ -2,6 +2,7 @@
 .claude/
 .gstack/
 .omc/
+.playwright-mcp/
 tools/
 chat-export.md
 run.bat

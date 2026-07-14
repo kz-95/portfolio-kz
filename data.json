@@ -71,7 +71,7 @@
     "ctaSecondary": { "label": "Featured work", "href": "#work" },
     "scrollText": "SCROLL"
   },
-  "bandText": "FULL STACK \u25c6 GAME DEV \u25c6 3D \u25c6 VFX \u25c6 UNITY \u25c6 ANGULAR \u25c6 REACT \u25c6 GLSL \u25c6 HLSL \u25c6 SHADER \u25c6 REST API \u25c6 FRONTEND \u25c6 BACKEND ",
+  "bandText": "FULL STACK \u25c6 AGENTIC AI \u25c6 GAME DEV \u25c6 3D \u25c6 VFX \u25c6 UNITY \u25c6 ANGULAR \u25c6 REACT \u25c6 GLSL \u25c6 HLSL \u25c6 SHADER \u25c6 REST API \u25c6 FRONTEND \u25c6 BACKEND ",
   "caseStudy": {
     "id": "my-home-servicer",
     "sectionLabel": "(01) - FEATURED CASE STUDY",
@@ -98,7 +98,15 @@
       "label": "Explore the live product",
       "url": "https://myhomeservicer.pages.dev"
     },
-    "gallery": ["img/mhs-browser.png", "img/mhs-phone.png", "img/placeholder-1.svg"],
+    "gallery": [
+      { "src": "img/mhs-browser.png", "caption": "Marketplace landing - homeowners browse and request quotes across 30+ service categories." },
+      { "src": "img/mhs-customer.png", "caption": "Customer portal with the AI Help Assistant answering booking questions in real time." },
+      { "src": "img/mhs-servicer.png", "caption": "Servicer dashboard - earnings, active jobs, and payout tracking at a glance." },
+      { "src": "img/mhs-admin.png", "caption": "Admin console - platform-wide revenue, escrow, and review queues in one view." },
+      { "src": "img/mhs-phone.png", "caption": "Fully responsive - the entire booking flow scales from desktop to mobile." },
+      { "type": "youtube", "id": "LmWT_AoDC6I", "caption": "Financial Report generator - live walkthrough, part 1." },
+      { "type": "youtube", "id": "d8G5VhHBY4k", "caption": "Financial Report generator - live walkthrough, part 2." }
+    ],
     "mockupBrowser": "img/mhs-browser.png",
     "mockupPhone": "img/mhs-phone.png",
     "stats": [
@@ -118,14 +126,14 @@
         "tags": "OFFLINE TOOL \u00b7 AI \u00b7 BUG TRACKER",
         "thumbStyle": "thumb-invoice",
         "thumbInitials": "QB",
-        "url": "",
+        "url": "https://quickbeak.com/QuickBeak",
         "gallery": [
-          "img/placeholder-1.svg",
-          "img/placeholder-2.svg",
-          "img/placeholder-3.svg"
+          { "src": "img/quickbeak-1.png", "caption": "Bug board - cycle status with a tap, filter by category, and export to Markdown, JSON, or CSV." },
+          { "src": "img/quickbeak-2.png", "caption": "Sync & Collaborate - share one offline list through a private Google Sheet; your API key never leaves the device." },
+          { "src": "img/quickbeak-3.png", "caption": "Rich bug editor - Magic Tidy rewrites messy notes into a clean report using your chosen AI model." }
         ],
         "description": "Offline-first AI bug tracker built as a developer tool. Search, categorize, and resolve bugs without an internet connection.",
-        "liveUrl": ""
+        "liveUrl": "https://quickbeak.com/QuickBeak"
       },
       {
         "id": "senang-invoice",
@@ -136,9 +144,9 @@
         "thumbInitials": "SI",
         "url": "https://senang-invoice.vercel.app/",
         "gallery": [
-          "img/placeholder-2.svg",
-          "img/placeholder-1.svg",
-          "img/placeholder-3.svg"
+          { "src": "img/senang-1.png", "caption": "Snap a receipt, speak your items, or type them in - MyInvois submission handled for you." },
+          { "src": "img/senang-2.png", "caption": "The painful MyInvois portal way vs. the Senang way - one path is not." },
+          { "src": "img/senang-3.png", "caption": "Private, local-first, MyInvois-valid - UBL 2.1 output with QR code, free to use." }
         ],
         "description": "Local-first Malaysian e-invoice app that turns a photo, voice note, or quick input into MyInvois-valid invoices. AI auto-classifies line items and submits to IRBM in one click, generating a QR code and PDF instantly - all while data stays on your device.",
         "liveUrl": "https://senang-invoice.vercel.app/"
@@ -152,9 +160,10 @@
         "thumbInitials": "ZR",
         "url": "https://kze.dpdns.org/",
         "gallery": [
-          "img/placeholder-3.svg",
-          "img/placeholder-1.svg",
-          "img/placeholder-2.svg"
+          { "type": "video", "src": "vid/zen-resume-4.mp4", "caption": "Booting WebGL intro into the filterable project gallery - full walkthrough." },
+          { "src": "img/zen-resume-1.png", "caption": "A WebGL boot intro opens into the single-page portfolio - ZEN KUAN, front and center." },
+          { "src": "img/zen-resume-2.png", "caption": "About - six years across the stack, from indie studios to structured MNC." },
+          { "src": "img/zen-resume-3.png", "caption": "Featured case study and selected works in one filterable, playful gallery." }
         ],
         "description": "Interactive resume and portfolio for a creative full-stack developer. A WebGL booting intro opens into a filterable project gallery spanning game, shader, 3D, and web work - all in one playful single-page experience.",
         "liveUrl": "https://kze.dpdns.org/"
@@ -190,9 +199,13 @@
         "tags": "ANGULAR \u00b7 REACT \u00b7 REST API \u00b7 NODE.JS \u00b7 TYPESCRIPT",
         "behavior": "detail",
         "gallery": [
-          "img/placeholder-1.svg",
-          "img/placeholder-2.svg",
-          "img/placeholder-3.svg"
+          { "src": "img/perfect-home-1.png", "title": "Perfect Home Outlet", "url": "https://perfect-home.com.my/", "caption": "Furniture retail platform for the Klang Valley: a 100+ model catalogue with per-model size, fabric and colour options, showroom finder and WhatsApp enquiry flow." },
+          { "src": "img/mhs-customer.png", "title": "My Home Servicer", "url": "https://myhomeservicer.pages.dev/", "caption": "Two-sided marketplace on Angular + Express, with four gated role layers and escrow-aware booking." },
+          { "src": "img/quickbeak-1.png", "title": "QuickBeak", "url": "https://quickbeak.com/", "caption": "Offline-first AI bug tracker; search, categorise and resolve bugs with no connection." },
+          { "src": "img/senang-1.png", "title": "Senang Invoice", "url": "https://senang-invoice.vercel.app/", "caption": "Local-first Malaysian e-invoicing; photo or voice in, MyInvois-valid invoice out." },
+          { "src": "img/zen-resume-2.png", "title": "Zen Resume", "url": "https://kze.dpdns.org/", "caption": "Interactive WebGL resume and filterable project gallery." },
+          { "src": "img/ssg-resume-1.png", "title": "SSG Resume", "url": "https://ssg-resume.pages.dev/", "caption": "A reusable static-site resume and portfolio template (shown with placeholder content): drop in your own data and deploy." },
+          { "src": "img/stale-resume.webp", "title": "Stale Resume Website", "url": "https://zen-resume.pages.dev/", "caption": "Static-site resume template with a booting WebGL intro and tag-filtered work grid." }
         ],
         "description": "End-to-end web applications - from database schema to deployment. I build products that ship.",
         "liveUrl": ""
@@ -203,9 +216,9 @@
         "tags": "PRODUCTIVITY TOOLS \u00b7 PLUGINS \u00b7 PIPELINES \u00b7 EDITOR TOOLS",
         "behavior": "detail",
         "gallery": [
-          "img/placeholder-2.svg",
-          "img/placeholder-3.svg",
-          "img/placeholder-1.svg"
+          { "type": "video", "src": "vid/Tools-1.mp4", "caption": "Browser toolbar injector - overlays a screenshot region and narrates the layout back to a non-vision LLM, so it knows exactly where the bug lives before fixing it." },
+          { "type": "video", "src": "vid/Tools-2.mp4", "caption": "Watermark remover - samples the neighbouring pixels and floods the Gemini watermark with matching colour." },
+          { "type": "video", "src": "vid/Tools-3.mp4", "caption": "Element resizer - click any element on the page and drag its size and ratio live." }
         ],
         "description": "Custom tools that accelerate workflows and eliminate repetitive tasks.",
         "liveUrl": ""
@@ -216,9 +229,12 @@
         "tags": "UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 GAMEPLAY SYSTEMS",
         "behavior": "detail",
         "gallery": [
-          "img/placeholder-3.svg",
-          "img/placeholder-1.svg",
-          "img/placeholder-2.svg"
+          { "type": "video", "src": "vid/Game-1.mp4", "title": "Operatives: Revolve", "url": "https://store.steampowered.com/app/3004810/OPERATIVES_Revolve/", "caption": "Gameplay and systems reel - real-time 3D, VFX and tooling across shipped titles." },
+          { "src": "img/game-operatives.jpg", "title": "Operatives: Revolve", "url": "https://store.steampowered.com/app/3004810/OPERATIVES_Revolve/", "caption": "The Only Studio - roguelike deckbuilder. Technical Artist, Generalist and VFX Artist: VFX, shaders, SFX, tooling, gameplay systems and marketing assets." },
+          { "src": "img/game-moh.jpg", "title": "Medal of Honor: Above and Beyond", "url": "https://store.steampowered.com/app/1402320", "caption": "Respawn, ported at Virtuos - AAA VR action. VR porting, 3D modelling, environment art and optimisation." },
+          { "src": "img/game-crossfirex.jpg", "title": "CrossfireX", "url": "https://www.remedygames.com/games/crossfire-x", "caption": "Virtuos - 3D Modeller on environmental assets and level art." },
+          { "src": "img/game-crossfirehd.jpg", "title": "Crossfire HD", "url": "https://cfhd.cf.qq.com/", "caption": "Virtuos - 3D Modeller on high-fidelity environmental assets and textures." },
+          { "src": "img/game-fires.jpg", "title": "Fires at Midnight", "url": "https://store.steampowered.com/app/1282140", "caption": "Persona Theory Games - Unity gameplay systems, internal tooling and technical documentation." }
         ],
         "description": "AAA gameplay systems, editor tools, and real-time 3D experiences.",
         "liveUrl": ""
@@ -229,7 +245,14 @@
         "tags": "BLENDER \u00b7 UNITY \u00b7 UNREAL ENGINE \u00b7 C# \u00b7 HLSL \u00b7 GLSL \u00b7 NIAGARA",
         "behavior": "external",
         "url": "https://zenkuan.carrd.co",
-        "targetBlank": true
+        "targetBlank": true,
+        "hoverMedia": [
+          { "type": "video", "src": "vid/VFX-4.mp4", "full": true },
+          { "type": "image", "src": "img/vfx-16.gif", "hold": 5500 },
+          { "type": "image", "src": "img/vfx-18.gif", "hold": 4400 },
+          { "type": "image", "src": "img/vfx-04.gif", "hold": 1500 },
+          { "type": "image", "src": "img/vfx-02.gif", "hold": 1700 }
+        ]
       },
       {
         "idx": "05 External Link",
@@ -237,7 +260,13 @@
         "tags": "KRITA \u00b7 3DS MAX \u00b7 MAYA \u00b7 SUBSTANCE PAINTER \u00b7 SUBSTANCE DESIGNER",
         "behavior": "external",
         "url": "https://kze.artstation.com",
-        "targetBlank": true
+        "targetBlank": true,
+        "hoverMedia": [
+          { "type": "youtube", "id": "DMj2o29PQIk" },
+          { "type": "image", "src": "img/2d3d-pistol.gif", "hold": 10200 },
+          { "type": "image", "src": "img/2d3d-bic.gif", "hold": 5200 },
+          { "type": "video", "src": "vid/hover-2D3D-1.mp4", "full": true }
+        ]
       }
     ]
   },
@@ -252,6 +281,7 @@
       { "label": "GitHub", "url": "https://github.com/kz-95" },
       { "label": "ArtStation", "url": "https://kze.artstation.com" },
       { "label": "VFX Carrd", "url": "https://zenkuan.carrd.co" },
+      { "label": "YouTube", "url": "https://www.youtube.com/@Zen-K" },
 
       { "label": "Instagram", "url": "https://www.instagram.com/zen.k.z/" }
     ],

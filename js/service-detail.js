@@ -30,7 +30,7 @@ document.addEventListener('dom:ready', function () {
     const mediaHTML = hasGallery
       ? `<div class="service-expanded__carousel">
            <div class="service-expanded__gallery" data-carousel-track>${
-             svc.gallery.map(src => `<img src="${esc(src)}" alt="${esc(svc.title)} preview" loading="lazy">`).join('')
+             svc.gallery.map(item => renderSlide(item, svc.title)).join('')
            }</div>${arrows}</div>`
       : `<div class="service-expanded__carousel">
            <div class="service-expanded__placeholder"><span>${esc(svc.idx)}</span></div>
@@ -177,5 +177,51 @@ document.addEventListener('dom:ready', function () {
     const d = document.createElement('div');
     d.textContent = str;
     return d.innerHTML;
+  }
+
+  /* gallery items may be a plain "src" string or a { src, caption, type, id, poster } object */
+  function galSrc(item) { return typeof item === 'string' ? item : (item && item.src) || ''; }
+  function galCap(item) { return typeof item === 'string' ? '' : (item && item.caption) || ''; }
+  function galUrl(item) { return typeof item === 'string' ? '' : (item && item.url) || ''; }
+  function galTitle(item) { return typeof item === 'string' ? '' : (item && item.title) || ''; }
+  function galType(item) {
+    if (typeof item === 'string') return 'image';
+    return (item && item.type) || 'image';
+  }
+
+  /* one carousel slide: image, self-hosted video, or youtube embed */
+  function renderSlide(item, title) {
+    const type = galType(item);
+    const cap  = galCap(item);
+    const url  = galUrl(item);
+    const ttl  = galTitle(item);
+    /* a slide that points at a live site gets the same desc-row treatment as the modal footer */
+    const capHTML = (cap || url || ttl)
+      ? `<figcaption class="carousel__caption${url ? ' work-expanded__desc-row' : ''}">
+           <span class="carousel__meta">
+             ${ttl ? `<b class="carousel__title">${esc(ttl)}</b>` : ''}
+             ${cap ? `<span class="work-expanded__desc">${esc(cap)}</span>` : ''}
+           </span>
+           ${url ? `<a class="work-expanded__live" href="${esc(url)}" target="_blank" rel="noopener">Visit live site <span class="work-expanded__live-arrow" aria-hidden="true">→</span></a>` : ''}
+         </figcaption>`
+      : '';
+
+    let media;
+    if (type === 'youtube') {
+      const id = (item && item.id) || '';
+      media = `<iframe class="carousel__yt" src="https://www.youtube-nocookie.com/embed/${esc(id)}"
+                 title="${esc(title)} video" loading="lazy" allowfullscreen
+                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+    } else if (type === 'video') {
+      const poster = item && item.poster ? ` poster="${esc(item.poster)}"` : '';
+      media = `<video class="carousel__video" src="${esc(galSrc(item))}"${poster}
+                 controls playsinline preload="metadata"></video>`;
+    } else {
+      /* NOT loading="lazy": the slides are built while the modal is still
+         display:none, so a lazy image never becomes "visible" and is never
+         fetched - the slide just renders as an empty box. */
+      media = `<img src="${esc(galSrc(item))}" alt="${esc(title)} preview" decoding="async">`;
+    }
+    return `<figure class="carousel__slide">${media}${capHTML}</figure>`;
   }
 });

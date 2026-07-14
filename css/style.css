@@ -1946,6 +1946,15 @@ body.dark .mhs-browser {
   width: 0;
   height: 0;
 }
+.work-expanded__gallery .carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: center;
+  margin: 0;
+}
 .work-expanded__gallery img {
   width: 100%;
   max-width: 1200px;
@@ -1954,7 +1963,6 @@ body.dark .mhs-browser {
   aspect-ratio: 16 / 9;
   object-fit: contain;
   border-radius: 12px;
-  scroll-snap-align: center;
   flex-shrink: 0;
 }
 .work-expanded__desc-row {
@@ -2133,6 +2141,15 @@ body.dark .mhs-browser {
 .service-expanded__gallery::-webkit-scrollbar {
   display: none;
 }
+.service-expanded__gallery .carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: center;
+  margin: 0;
+}
 .service-expanded__gallery img {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -2140,7 +2157,6 @@ body.dark .mhs-browser {
   max-height: min(760px, 72dvh);
   object-fit: cover;
   border-radius: 12px;
-  scroll-snap-align: center;
   flex-shrink: 0;
 }
 .service-expanded__placeholder {
@@ -2275,5 +2291,400 @@ body.dark .mhs-browser {
   .service-expanded__gallery img,
   .service-expanded__placeholder {
     max-height: 34dvh;
+  }
+}
+
+/* ══ carousel slides: image / self-hosted video / youtube ═══ */
+
+.carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: center;
+}
+.carousel__slide > img,
+.carousel__slide > video,
+.carousel__slide > iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  background: var(--stone);
+  object-fit: contain;
+}
+.carousel__slide > iframe {
+  border: 0;
+}
+.carousel__caption {
+  position: static;
+  flex: 0 0 auto;
+  margin-top: 0.75rem;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* a captioned slide that links out: title + blurb on the left, CTA pinned right.
+   minmax(0, 1fr) is load-bearing - a plain 1fr floors at the text's min-content
+   width, which pushes the CTA off the slide. */
+.carousel__caption.work-expanded__desc-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  margin-top: 0.75rem;
+  text-align: left;
+  border-bottom: 0;
+  border-top: 1px solid var(--line);
+}
+.carousel__meta {
+  display: block;
+  min-width: 0;
+}
+.carousel__title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: 1.02rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.carousel__caption .work-expanded__desc {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.carousel__caption .work-expanded__live {
+  white-space: nowrap;
+}
+
+/* ══ "other work" cards: artwork + glass + glow ═════════════ */
+
+.work-expanded__other-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+.work-expanded__other-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--card-bg);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s var(--ease-out);
+}
+.work-expanded__other-card:hover .work-expanded__other-media {
+  transform: scale(1.08);
+}
+.work-expanded__other-vid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+.work-expanded__other-card:hover .work-expanded__other-vid {
+  opacity: 1;
+}
+
+/* frosted panel holds the initials + title so they stay legible
+   over whatever artwork sits behind them */
+.work-expanded__other-glass {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 22, 27, 0.4);
+  backdrop-filter: blur(7px) saturate(120%);
+  -webkit-backdrop-filter: blur(7px) saturate(120%);
+  transition:
+    background 0.35s var(--ease-out),
+    backdrop-filter 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out);
+}
+/* on hover the glass thins out so the preview underneath reads */
+.work-expanded__other-card:hover .work-expanded__other-glass {
+  background: rgba(20, 22, 27, 0.18);
+  backdrop-filter: blur(2px) saturate(130%);
+  -webkit-backdrop-filter: blur(2px) saturate(130%);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.work-expanded__other-card:hover {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 10px 30px -8px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 34px -4px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* ══ floating cursor-follow preview (service rows) ══════════ */
+
+.svc-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1800;
+  width: 400px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.94;
+  background: var(--stone);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.55);
+  will-change: transform;
+  transition:
+    opacity 0.28s var(--ease-out),
+    scale 0.28s var(--ease-out);
+}
+.svc-preview.is-visible {
+  opacity: 1;
+  scale: 1;
+}
+.svc-preview__media {
+  position: absolute;
+  inset: 0;
+}
+iframe.svc-preview__el {
+  border: 0;
+}
+.svc-preview__el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1.04);
+  transition:
+    opacity 0.42s cubic-bezier(0, 0, 0.2, 1),
+    filter 0.42s cubic-bezier(0, 0, 0.2, 1),
+    transform 0.42s cubic-bezier(0, 0, 0.2, 1);
+}
+.svc-preview__el.is-in {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-preview,
+  .svc-preview__el,
+  .work-expanded__other-media,
+  .work-expanded__other-glass {
+    transition: none;
+  }
+  .svc-preview__el {
+    filter: none;
+    transform: none;
+  }
+}
+
+/* The slide is media + caption. A percentage max-height on the media would
+   resolve against an auto-height figure (indefinite -> ignored), so the caption
+   ends up sitting ON the media. Let the media flex-shrink instead and pin the
+   caption underneath it. */
+.work-expanded__gallery .carousel__slide {
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+}
+.work-expanded__gallery .carousel__slide > img,
+.work-expanded__gallery .carousel__slide > video,
+.work-expanded__gallery .carousel__slide > iframe {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+.service-expanded__gallery .carousel__slide {
+  max-height: 100%;
+  min-height: 0;
+}
+.service-expanded__gallery .carousel__slide > img,
+.service-expanded__gallery .carousel__slide > video,
+.service-expanded__gallery .carousel__slide > iframe {
+  max-height: min(680px, 62dvh);
+  min-height: 0;
+}
+
+/* A grid/flex item's min-width defaults to `auto`, i.e. it refuses to shrink below
+   its content's intrinsic width. The carousel therefore held itself at ~1200px
+   inside a 375px phone, dragging every slide off-screen. Floor them all at 0. */
+.service-expanded__carousel,
+.service-expanded__gallery,
+.work-expanded__carousel,
+.work-expanded__gallery {
+  min-width: 0;
+  max-width: 100%;
+}
+.carousel__slide {
+  max-width: 100%;
+}
+
+/* Stills are full-page screenshots and portrait gifs; `contain` letterboxed them
+   into dead grey space, so fill the frame and anchor to the top (the hero is the
+   part worth seeing). Clips are already 16:9, so they stay `contain`. */
+.carousel__slide > img,
+.work-expanded__gallery .carousel__slide > img,
+.service-expanded__gallery .carousel__slide > img {
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ══ work cards: preview / shade / glass initials ═══════════ */
+
+/* bottom layer - the gallery, revealed on hover */
+.work-card__preview {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out);
+}
+.work-card.is-hover .work-card__preview {
+  opacity: 1;
+}
+.work-card__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+.work-card__media.is-in {
+  opacity: 1;
+}
+
+/* middle layer - shade sitting over the artwork, gone on hover */
+.work-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(10, 11, 14, 0.42);
+  transition: opacity 0.5s var(--ease-out);
+}
+/* the shade holds until the outline has finished un-drawing (0.65s), then lifts */
+.work-card.is-hover .work-card__shade {
+  opacity: 0;
+  transition: opacity 0.55s var(--ease-out) 0.65s;
+}
+
+/* top layer - the initials. The existing `.work-card__thumb span` rule still
+   drives the tilt+scale, so this only adds the glass + outline. */
+/* fixed 200x160 box: the SVG mask uses userSpaceOnUse, so the glass layer only
+   lines up with the glyphs when 1 user unit == 1 CSS px. Do not make this fluid. */
+.work-card__initials {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 200px;
+  height: 160px;
+  max-width: 100%;
+}
+.wc-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.wc-mask-text,
+.wc-outline {
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: 86px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.wc-mask-text {
+  fill: #fff; /* white = the region the glass shows through */
+}
+.wc-outline {
+  fill: none;
+  stroke: rgba(241, 241, 236, 0.95);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  /* <text> has no getTotalLength(), so the dash length is a tuned constant */
+  stroke-dasharray: var(--wc-len, 1000);
+  stroke-dashoffset: 0;
+}
+/* frosted material, clipped to the glyphs by the SVG mask */
+.work-card__glass {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 1;
+  background: rgba(241, 241, 236, 0.16);
+  backdrop-filter: blur(10px) saturate(1.6);
+  -webkit-backdrop-filter: blur(10px) saturate(1.6);
+}
+
+/* hover: erase the outline, dissolve the glass */
+.work-card.is-hover .wc-outline {
+  stroke-dashoffset: var(--wc-len, 1000);
+  transition: stroke-dashoffset 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.work-card.is-hover .work-card__glass {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+/* leaving: snap the dash back with no transition, fade the lockup in */
+.work-card.is-back .work-card__initials {
+  animation: wc-fade-in 0.5s var(--ease-out) both;
+}
+.work-card.is-back .wc-outline {
+  stroke-dashoffset: 0;
+  transition: none;
+}
+.work-card.is-back .work-card__glass {
+  opacity: 1;
+  transition: none;
+}
+@keyframes wc-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card__preview,
+  .work-card__shade,
+  .work-card__media,
+  .work-card__glass,
+  .wc-outline {
+    transition: none;
+  }
+  .work-card.is-back .work-card__initials {
+    animation: none;
   }
 }
