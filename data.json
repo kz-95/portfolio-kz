@@ -262,11 +262,10 @@
         "url": "https://kze.artstation.com",
         "targetBlank": true,
         "hoverMedia": [
-          { "type": "youtube", "id": "DMj2o29PQIk" },
-          { "type": "image", "src": "img/2d3d-pistol.gif", "hold": 10200 },
-          { "type": "image", "src": "img/2d3d-bic.gif", "hold": 5200 },
-          { "type": "video", "src": "vid/2D3D-1.mp4", "full": true },
-          { "type": "video", "src": "vid/2D3D-4.mp4", "full": true }
+          { "type": "video", "src": "vid/2D3D-1.mp4", "hold": 1800 },
+          { "type": "image", "src": "img/2d3d-pistol.gif", "hold": 1800 },
+          { "type": "image", "src": "img/2d3d-bic.gif", "hold": 1800 },
+          { "type": "video", "src": "vid/2D3D-4.mp4", "hold": 1800 }
         ]
       }
     ]

@@ -129,7 +129,9 @@ document.addEventListener('dom:ready', function () {
     if (item && item.t === 'video') {
       const v = mediaBox.querySelector('video');
       if (v) v.addEventListener('ended', advance, { once: true });
-      if (!item.full) cycleTimer = setTimeout(advance, VIDEO_MS);
+      /* explicit hold caps the clip even when full; otherwise VIDEO_MS unless full */
+      const cap = item.hold || (item.full ? 0 : VIDEO_MS);
+      if (cap) cycleTimer = setTimeout(advance, cap);
     } else if (item && item.t === 'youtube') {
       cycleTimer = setTimeout(advance, item.hold || YT_MS);
     } else {
