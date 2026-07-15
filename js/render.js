@@ -304,8 +304,11 @@ function renderAbout(a) {
 
   const title = about.querySelector(S.aboutTitle);
   if (title && a.titleLines) {
-    title.innerHTML = a.titleLines.map(line =>
-      `<span class="line-mask"><span class="line-inner">${esc(line)}</span></span>`
+    title.innerHTML = a.titleLines.map((line, i) =>
+      /* line 0 is the greeting, animated by hacker-decode. Keep the yPercent
+         reveal off it so the two systems don't fight and leave it translated
+         one line-height down (overlapping the next line). */
+      `<span class="line-mask${i === 0 ? ' line-mask--static' : ''}"><span class="line-inner">${esc(line)}</span></span>`
     ).join('\n');
   }
 

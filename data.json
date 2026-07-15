@@ -160,7 +160,7 @@
         "thumbInitials": "ZR",
         "url": "https://kze.dpdns.org/",
         "gallery": [
-          { "type": "video", "src": "vid/zen-resume-4.mp4", "caption": "Booting WebGL intro into the filterable project gallery - full walkthrough." },
+          { "type": "video", "src": "vid/zen-resume-1.mp4", "caption": "Booting WebGL intro into the filterable project gallery - full walkthrough." },
           { "src": "img/zen-resume-1.png", "caption": "A WebGL boot intro opens into the single-page portfolio - ZEN KUAN, front and center." },
           { "src": "img/zen-resume-2.png", "caption": "About - six years across the stack, from indie studios to structured MNC." },
           { "src": "img/zen-resume-3.png", "caption": "Featured case study and selected works in one filterable, playful gallery." }
@@ -203,9 +203,9 @@
           { "src": "img/mhs-customer.png", "title": "My Home Servicer", "url": "https://myhomeservicer.pages.dev/", "caption": "Two-sided marketplace on Angular + Express, with four gated role layers and escrow-aware booking." },
           { "src": "img/quickbeak-1.png", "title": "QuickBeak", "url": "https://quickbeak.com/", "caption": "Offline-first AI bug tracker; search, categorise and resolve bugs with no connection." },
           { "src": "img/senang-1.png", "title": "Senang Invoice", "url": "https://senang-invoice.vercel.app/", "caption": "Local-first Malaysian e-invoicing; photo or voice in, MyInvois-valid invoice out." },
-          { "src": "img/zen-resume-2.png", "title": "Zen Resume", "url": "https://kze.dpdns.org/", "caption": "Interactive WebGL resume and filterable project gallery." },
+          { "type": "video", "src": "vid/zen-resume-1.mp4", "title": "Zen Resume", "url": "https://kze.dpdns.org/", "caption": "Interactive WebGL resume and filterable project gallery." },
           { "src": "img/ssg-resume-1.png", "title": "SSG Resume", "url": "https://ssg-resume.pages.dev/", "caption": "A reusable static-site resume and portfolio template (shown with placeholder content): drop in your own data and deploy." },
-          { "src": "img/stale-resume.webp", "title": "Stale Resume Website", "url": "https://zen-resume.pages.dev/", "caption": "Static-site resume template with a booting WebGL intro and tag-filtered work grid." }
+          { "type": "video", "src": "vid/fullstack-8.mp4", "title": "Stale Resume Website", "url": "https://zen-resume.pages.dev/", "caption": "Static-site resume template with a booting WebGL intro and tag-filtered work grid." }
         ],
         "description": "End-to-end web applications - from database schema to deployment. I build products that ship.",
         "liveUrl": ""
@@ -247,10 +247,10 @@
         "url": "https://zenkuan.carrd.co",
         "targetBlank": true,
         "hoverMedia": [
-          { "type": "video", "src": "vid/VFX-4.mp4", "full": true },
           { "type": "image", "src": "img/vfx-16.gif", "hold": 5500 },
           { "type": "image", "src": "img/vfx-18.gif", "hold": 4400 },
           { "type": "image", "src": "img/vfx-04.gif", "hold": 1500 },
+          { "type": "video", "src": "vid/VFX-4.mp4", "full": true },
           { "type": "image", "src": "img/vfx-02.gif", "hold": 1700 }
         ]
       },
@@ -265,7 +265,8 @@
           { "type": "youtube", "id": "DMj2o29PQIk" },
           { "type": "image", "src": "img/2d3d-pistol.gif", "hold": 10200 },
           { "type": "image", "src": "img/2d3d-bic.gif", "hold": 5200 },
-          { "type": "video", "src": "vid/hover-2D3D-1.mp4", "full": true }
+          { "type": "video", "src": "vid/2D3D-1.mp4", "full": true },
+          { "type": "video", "src": "vid/2D3D-4.mp4", "full": true }
         ]
       }
     ]

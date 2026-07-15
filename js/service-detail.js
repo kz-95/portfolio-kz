@@ -41,13 +41,13 @@ document.addEventListener('dom:ready', function () {
       : '';
 
     return `
-      ${mediaHTML}
       <div class="service-expanded__info">
         <h2>${esc(svc.title)}</h2>
         <p class="service-expanded__tags mono">${esc(svc.tags)}</p>
         <p class="service-expanded__desc">${esc(svc.description)}</p>
         ${liveBtn}
-      </div>`;
+      </div>
+      ${mediaHTML}`;
   }
 
   function open(triggerEl) {

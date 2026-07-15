@@ -2111,22 +2111,26 @@ body.dark .mhs-browser {
 }
 .service-expanded__inner {
   height: 100dvh;
-  max-width: 1340px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: clamp(3.5rem, 7vh, 5rem) clamp(1.25rem, 4vw, 3rem)
+  padding: clamp(3rem, 6vh, 4.5rem) clamp(1.25rem, 4vw, 3rem)
     clamp(1.5rem, 4vh, 2.5rem);
-  display: grid;
-  grid-template-columns: 1.85fr 1fr;
-  grid-template-areas: "media info";
-  align-content: center;
-  gap: clamp(1.5rem, 4vw, 3rem);
+  /* centered column: compact header on top, one big centered gallery below
+     (WHAT I DO detail has no "other work" strip, so the media takes the page) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vh, 2rem);
 }
 .service-expanded__carousel {
-  grid-area: media;
   position: relative;
+  width: 100%;
   min-height: 0;
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .service-expanded__gallery {
   display: flex;
@@ -2169,10 +2173,9 @@ body.dark .mhs-browser {
   place-items: center;
 }
 .service-expanded__info {
-  grid-area: info;
-  align-self: center;
-  min-height: 0;
-  overflow-y: auto;
+  flex-shrink: 0;
+  max-width: 760px;
+  text-align: center;
 }
 .service-expanded__placeholder span {
   font-family: var(--font-display);
@@ -2346,6 +2349,12 @@ body.dark .mhs-browser {
   text-align: left;
   border-bottom: 0;
   border-top: 1px solid var(--line);
+  /* Own the ::before ink fill: .carousel__caption sets position:static, which
+     would otherwise beat .work-expanded__desc-row's position:relative and let the
+     inset:0 overlay resolve against the whole slide - painting the image black on
+     hover. Force a containing block + clip so the fill stays in this row only. */
+  position: relative;
+  overflow: hidden;
 }
 .carousel__meta {
   display: block;
@@ -2358,6 +2367,10 @@ body.dark .mhs-browser {
   font-size: 1.02rem;
   line-height: 1.25;
   color: var(--ink);
+  transition: color 0.35s;
+}
+.work-expanded__desc-row:hover .carousel__title {
+  color: var(--paper);
 }
 .carousel__caption .work-expanded__desc {
   display: block;

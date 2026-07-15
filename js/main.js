@@ -102,6 +102,9 @@ function initAll() {
 
     /* masked line titles */
     document.querySelectorAll('.line-mask').forEach((mask) => {
+      /* the greeting line is driven by hacker-decode; a yPercent reveal on top
+         of it leaves it translated one line down and overlapping the next line */
+      if (mask.classList.contains('line-mask--static')) return;
       const inner = mask.querySelector('.line-inner');
       if (!inner) return;
       gsap.fromTo(inner,

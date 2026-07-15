@@ -240,6 +240,18 @@ document.addEventListener('dom:ready', function () {
     track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
   });
 
+  /* ← / → step through whichever gallery is currently open */
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    /* the visible track = the one whose modal is on screen (offsetParent set) */
+    const track = [...document.querySelectorAll('[data-carousel-track]')]
+      .find(t => t.offsetParent !== null && t.scrollWidth > t.clientWidth + 1);
+    if (!track) return;
+    e.preventDefault();
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
+    track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
+  });
+
   window.__workDetail = { open, close };
 
   function esc(str) {
