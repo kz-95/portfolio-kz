@@ -53,7 +53,10 @@
     if (p && p !== '/' && p !== '/index.html') {
       /* replace so the home state still sits beneath the deep-linked overlay */
       history.replaceState({ app: true }, '', p);
-      apply(p);
+      /* router.js loads before the overlay modules, so their dom:ready
+         handlers (which expose window.__workDetail etc.) run after this one.
+         Wait a task so every overlay is registered before opening. */
+      setTimeout(() => apply(p), 0);
     }
   });
 })();

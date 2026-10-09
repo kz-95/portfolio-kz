@@ -18,7 +18,8 @@ function renderAll(d) {
   renderHero(d.hero, d.global);
   renderBand(d.bandText);
   renderCaseStudy(d.caseStudy);
-  renderWorks(d.works);
+  renderWorks(d.works, S.works);
+  renderWorks(d.tooling, S.tooling);
   renderAbout(d.about);
   renderServices(d.services);
   renderContact(d.contact, d.global);
@@ -153,7 +154,11 @@ function renderHero(h, g) {
   }
   const avail = qs(S.heroAvail);
   if (avail && g) {
-    avail.innerHTML = `<span class="pulse-dot" aria-hidden="true"></span><span class="mono">${esc(g.availability)}</span>`;
+    if (g.availability) {
+      avail.innerHTML = `<span class="pulse-dot" aria-hidden="true"></span><span class="mono">${esc(g.availability)}</span>`;
+    } else {
+      avail.innerHTML = '';
+    }
   }
   const scroll = qs(S.heroScroll);
   if (scroll) {
@@ -254,16 +259,19 @@ function renderCaseStudy(cs) {
 }
 
 /* selected works */
-function renderWorks(ws) {
-  if (!ws) return;
-  const worksSection = qs(S.works);
-  if (worksSection) {
-    const label = worksSection.querySelector(S.secLabel);
-    if (label && ws.sectionLabel) label.textContent = ws.sectionLabel;
+/* work card grid: Selected Works and AI Tooling share the same card markup */
+function renderWorks(ws, sectionSel) {
+  const section = qs(sectionSel);
+  if (!section) return;
+  if (!ws || !ws.items || !ws.items.length) {
+    section.remove();
+    return;
   }
+  const label = section.querySelector(S.secLabel);
+  if (label && ws.sectionLabel) label.textContent = ws.sectionLabel;
   const items = ws.items;
-  const grid = qs(S.worksGrid);
-  if (!grid || !items) return;
+  const grid = section.querySelector(S.worksGrid);
+  if (!grid) return;
   grid.innerHTML = items.map((w, i) => {
     const maskId = `wc-mask-${esc(w.id)}`;
     const initials = esc(w.thumbInitials);
@@ -418,9 +426,10 @@ function renderContact(c, g) {
   /* meta */
   const meta = qs(S.contactMeta);
   if (meta) {
+    const availability = c.availability || g.availability;
     meta.innerHTML = `
       <div><p class="mono">EMAIL</p><a href="mailto:${esc(c.email || g.email)}">${esc(c.email || g.email)}</a></div>
-      <div><p class="mono">AVAILABILITY</p><p><span class="pulse-dot" aria-hidden="true"></span> ${esc(c.availability || g.availability)}</p></div>
+      ${availability ? `<div><p class="mono">AVAILABILITY</p><p><span class="pulse-dot" aria-hidden="true"></span> ${esc(availability)}</p></div>` : ''}
       <div><p class="mono">SOCIALS</p>
         <div class="contact__socials">${(c.socials || []).map(s =>
           `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`

@@ -1,4 +1,4 @@
-/* hacker-decode.js — scramble "Apa khabar!" greeting, cycle through languages */
+/* hacker-decode.js - scramble "Apa khabar!" greeting, cycle through languages */
 const HACKER = {
   glyphs: '!<>-_\\/[]{}=+*^?#01x▮░▒',
   startSpread: 63,
@@ -76,7 +76,7 @@ function initHackerDecode() {
   const title = document.querySelector('.about__title');
   if (!title) return;
 
-  /* only the first line-inner — "Apa khabar! I'm ZEN —" */
+  /* only the first line-inner: "Apa khabar!" */
   const lines = title.querySelectorAll('.line-inner');
   const greetLine = lines[0];
   if (!greetLine) return;

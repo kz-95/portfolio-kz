@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <strong>Creative Full Stack Developer</strong> — Puchong, Selangor, Malaysia<br/>
+  <strong>Creative Full Stack Developer</strong> · Puchong, Selangor, Malaysia<br/>
   <em>End-to-end builds where engineering meets art direction.</em>
 </p>
 
@@ -18,35 +18,35 @@
 
 ---
 
-A data-driven, single-page portfolio with WebGL shaders, smooth scrolling, dark mode, SPA-style routing, and a contact modal — no frameworks, no build step.
+A data-driven, single-page portfolio with WebGL shaders, smooth scrolling, dark mode, SPA-style routing, and a contact modal. No frameworks, no build step.
 
 <p align="center">
-  <kbd><strong>Day</strong> — cobalt &amp; cream</kbd>
+  <kbd><strong>Day</strong> - cobalt &amp; cream</kbd>
   &ensp;·&ensp;
-  <kbd><strong>Night</strong> — amber &amp; charcoal</kbd>
+  <kbd><strong>Night</strong> - amber &amp; charcoal</kbd>
 </p>
 
 ## Tech
 
 | Layer | Tech |
 |---|---|
-| **Animation** | [GSAP 3.13](https://gsap.com) + ScrollTrigger — preloader, reveals, parallax, counters |
+| **Animation** | [GSAP 3.13](https://gsap.com) + ScrollTrigger - preloader, reveals, parallax, counters |
 | **Smooth Scroll** | [Lenis 1.1](https://lenis.darkroom.engineering) |
-| **WebGL** | [Three.js](https://threejs.org) (ESM, dynamic import) — hero-arch flow-field shader |
+| **WebGL** | [Three.js](https://threejs.org) (ESM, dynamic import) - hero-arch flow-field shader |
 | **Routing** | Custom hash-based SPA router with history |
-| **Data** | `data.json` — all content, driven through `render.js` |
+| **Data** | `data.json` - all content, driven through `render.js` |
 | **Fonts** | Fraunces, Archivo, Space Mono, DM Serif Display, Outfit (Google Fonts) |
-| **Contact** | Formspree — async submission with inline status |
+| **Contact** | Formspree - async submission with inline status |
 
 ## Project Structure
 
 ```
 .
-├── index.html              # Single-page shell — sections populated at runtime
+├── index.html              # Single-page shell - sections populated at runtime
 ├── data.json               # All content, copy, links, and gallery data
 ├── vercel.json             # SPA rewrites for clean URLs
 ├── css/
-│   └── style.css           # Full stylesheet — custom properties, animations, responsive
+│   └── style.css           # Full stylesheet - custom properties, animations, responsive
 ├── js/
 │   ├── data.js             # Fetches & hydrates data.json
 │   ├── selectors.js        # DOM reference cache
@@ -57,7 +57,7 @@ A data-driven, single-page portfolio with WebGL shaders, smooth scrolling, dark 
 │   ├── service-detail.js   # Service description lightbox
 │   ├── hacker-decode.js    # Glitch/decode text animation
 │   ├── theme.js            # Dark/light toggle with system preference detection
-│   └── main.js             # Entry — GSAP, Lenis, Three.js arch, cursor, preloader
+│   └── main.js             # Entry - GSAP, Lenis, Three.js arch, cursor, preloader
 ├── img/                    # Portrait, mockups, placeholder gallery
 ├── tools/
 │   └── dev-save-server.mjs # Local dev-server for the CSS-override resizer
@@ -73,23 +73,23 @@ git clone https://github.com/kz-95/beautiful-website.git
 cd beautiful-website
 ```
 
-### Option A — `run.bat` (Windows)
+### Option A - `run.bat` (Windows)
 
 Double-click `run.bat`. It auto-kills stale port listeners, starts a local save-server for dev tooling, and opens `http://localhost:4173`.
 
-### Option B — `npx serve`
+### Option B - `npx serve`
 
 ```sh
 npx serve -l 4173 .
 ```
 
-### Option C — Python
+### Option C - Python
 
 ```sh
 python -m http.server 4173
 ```
 
-### Option D — VS Code Live Server
+### Option D - VS Code Live Server
 
 Install [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), right-click `index.html` → **Open with Live Server**.
 
@@ -124,7 +124,7 @@ wrangler pages deploy . --project-name=site02
 
 ## Customisation
 
-Edit `data.json` for all copy, links, gallery images, theme tokens, and socials. The rendering layer (`js/render.js`) consumes it at runtime — no HTML patches needed.
+Edit `data.json` for all copy, links, gallery images, theme tokens, and socials. The rendering layer (`js/render.js`) consumes it at runtime, so no HTML patches are needed.
 
 Key design tokens live in `css/style.css` as custom properties and in `data.json → theme` for the dual dark/light palette:
 
@@ -136,17 +136,17 @@ Key design tokens live in `css/style.css` as custom properties and in `data.json
 
 ## Features
 
-- **WebGL hero arch** — three.js flow-field fragment shader, mouse-reactive + scroll-parallaxed, falls back to CSS gradient
-- **Dual theme** — system-preference detection with manual toggle, persisted in `localStorage`
-- **Animated preloader** — percentage counter with GSAP-driven curtain reveal
-- **Smooth scroll** — Lenis with directional awareness and nav choreography
-- **SPA routing** — hash-based router with push-state history, deep-linkable work & service detail overlays
-- **Magnetic cursor** — context-aware labels (view, drag, open) on interactive targets
-- **Scroll-triggered reveals** — GSAP ScrollTrigger with staggered text, image, and stat animations
-- **Responsive** — 375 px through desktop, full-screen mobile nav with animated burger
-- **Contact modal** — Formspree-powered, no redirect, inline success/error states
-- **`prefers-reduced-motion`** — disables WebGL, preloader, and scroll reveals
-- **Dev tooling** — local-only CSS-override resizer with save-server (never shipped; gitignored)
+- **WebGL hero arch** - three.js flow-field fragment shader, mouse-reactive + scroll-parallaxed, falls back to CSS gradient
+- **Dual theme** - system-preference detection with manual toggle, persisted in `localStorage`
+- **Animated preloader** - percentage counter with GSAP-driven curtain reveal
+- **Smooth scroll** - Lenis with directional awareness and nav choreography
+- **SPA routing** - hash-based router with push-state history, deep-linkable work & service detail overlays
+- **Magnetic cursor** - context-aware labels (view, drag, open) on interactive targets
+- **Scroll-triggered reveals** - GSAP ScrollTrigger with staggered text, image, and stat animations
+- **Responsive** - 375 px through desktop, full-screen mobile nav with animated burger
+- **Contact modal** - Formspree-powered, no redirect, inline success/error states
+- **`prefers-reduced-motion`** - disables WebGL, preloader, and scroll reveals
+- **Dev tooling** - local-only CSS-override resizer with save-server (never shipped; gitignored)
 
 ## Contact
 

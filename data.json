@@ -33,10 +33,10 @@
     "title": "Kuan Zhe Huang (ZEN) - Creative Full Stack Developer, Puchong",
     "description": "Kuan Zhe Huang (ZEN) is a Creative Full Stack Developer based in Puchong, Selangor - building end-to-end products where engineering meets art direction. Specialising in Angular, React, Unity, 3D & VFX.",
     "ogTitle": "Kuan Zhe Huang (ZEN) - Creative Full Stack Developer",
-    "ogDescription": "End-to-end builds where engineering meets art direction. Based in Puchong, open to any opportunity."
+    "ogDescription": "End-to-end builds where engineering meets art direction. Based in Puchong, Selangor."
   },
   "global": {
-    "availability": "AVAILABLE FOR Q3 '26",
+    "availability": "",
     "email": "coffeeinveins@gmail.com",
     "location": "3.0220\u00b0 N, 101.6250\u00b0 E",
     "timezone": "MYT",
@@ -57,6 +57,7 @@
     "band": { "id": "", "navTheme": "dark" },
     "case": { "id": "work", "navTheme": "light" },
     "works": { "id": "", "navTheme": "dark" },
+    "tooling": { "id": "", "navTheme": "dark" },
     "about": { "id": "about", "navTheme": "dark" },
     "services": { "id": "services", "navTheme": "dark" },
     "contact": { "id": "contact", "navTheme": "light" },
@@ -170,8 +171,48 @@
       }
     ]
   },
+  "tooling": {
+    "sectionLabel": "(03) - AI TOOLING \u00b7 OPEN SOURCE",
+    "items": [
+      {
+        "id": "kz-skills",
+        "title": "KZ Skills",
+        "year": "OCT 2026",
+        "tags": "OPEN SOURCE \u00b7 AI AGENTS \u00b7 UI/UX",
+        "thumbStyle": "thumb-skills",
+        "thumbInitials": "KS",
+        "url": "https://github.com/kz-95/kz-skills",
+        "gallery": [
+          { "src": "img/kzskills-poster.png", "fit": "contain", "bg": "#efedea", "caption": "Every rule ships a wrong and a right sample side by side, plus a browser check that fails the wrong one." },
+          { "type": "video", "src": "vid/kzskills-improvements.mp4", "full": true, "loop": true, "bg": "#efedea", "caption": "Usability: a filter is a panel, a required field says so early, and a panel can always be closed." },
+          { "type": "video", "src": "vid/kzskills-de-ai.mp4", "full": true, "loop": true, "bg": "#efedea", "caption": "De-AI: what makes an interface look machine-made, and the fix for each tell." },
+          { "type": "video", "src": "vid/kzskills-charts.mp4", "full": true, "loop": true, "bg": "#efedea", "caption": "Charts: a highlight follows the mark, aggregates use the right operation, and time charts ship range presets." }
+        ],
+        "description": "UI rules for AI coding agents, with checks that measure them. 57 UI rules, 21 chart rules and 16 principles in eight installable Claude Code skills, each rule paired with a browser check that fails the mistake.",
+        "liveUrl": "https://kz-95.github.io/kz-skills/reference/ui-rules-visual.html",
+        "liveLabel": "See the rules live",
+        "repoUrl": "https://github.com/kz-95/kz-skills"
+      },
+      {
+        "id": "kz-harness",
+        "title": "Kz-harness",
+        "year": "SEP 2026",
+        "tags": "DESKTOP APP \u00b7 MULTI-AGENT \u00b7 ELECTRON",
+        "thumbStyle": "thumb-harness",
+        "thumbInitials": "KH",
+        "url": "https://github.com/kz-95/kz-harness",
+        "gallery": [
+          { "src": "img/kzharness-1.png", "fit": "contain", "bg": "#0f1117", "caption": "One Windows app for Claude Code, Codex, DeepSeek, API-key models and local models." },
+          { "src": "img/kzharness-2.png", "fit": "contain", "bg": "#0f1117", "caption": "A router picks the agent for each task, project checks verify the work, and a reviewer signs off before you see it." },
+          { "src": "img/kzharness-3.png", "fit": "contain", "bg": "#0f1117", "caption": "Everything runs on your PC; only the model calls you choose go online." }
+        ],
+        "description": "One desktop app for every coding agent. A router picks who handles each task, the project's own typecheck, lint, test and build verify the work, and a reviewer signs off before you see the answer. When an agent hits its usage limit, the task moves to the next one with a handoff note.",
+        "repoUrl": "https://github.com/kz-95/kz-harness"
+      }
+    ]
+  },
   "about": {
-    "sectionLabel": "(03) - ABOUT",
+    "sectionLabel": "(04) - ABOUT",
     "portrait": "img/zen-portrait-transparent.png",
     "portraitPosition": "50% 30%",
     "titleLines": [
@@ -179,7 +220,7 @@
       "I'm Zen, ",
       "build things where code meets craft."
     ],
-    "bio": "Six years across the spectrum. <strong>Indie studios</strong>, <strong>SME team</strong>, <strong>startup</strong>, and <strong>structured MNC</strong>. I build products end to end Angular and React on the frontend, Node and Express on the backend, REST APIs that scale, and databases that stay out of the way. When I'm not shipping web apps, I'm deep in Unity, Unreal, Shader work, where I honed the precision I bring to every line of code.",
+    "bio": "Six years across the spectrum. <strong>Indie studios</strong>, <strong>SME team</strong>, <strong>startup</strong>, and <strong>structured MNC</strong>. I build products end to end: Angular and React on the frontend, Node and Express on the backend, REST APIs that scale, and databases that stay out of the way. When I'm not shipping web apps, I'm deep in Unity, Unreal, Shader work, where I honed the precision I bring to every line of code.",
     "portraitCaption": "ZEN - PUCHONG, MY",
     "resume": "/resume",
     "resumeLabel": "View résumé",
@@ -191,7 +232,7 @@
     ]
   },
   "services": {
-    "sectionLabel": "(04) - WHAT I DO",
+    "sectionLabel": "(05) - WHAT I DO",
     "rows": [
       {
         "idx": "01",
@@ -271,11 +312,11 @@
     ]
   },
   "contact": {
-    "sectionLabel": "(05) - CONTACT",
+    "sectionLabel": "(06) - CONTACT",
     "kicker": "Have a project in mind?",
     "cta": "LET'S TALK",
     "email": "coffeeinveins@gmail.com",
-    "availability": "Available Q3 '26",
+    "availability": "",
     "socials": [
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/zenkuan/" },
       { "label": "GitHub", "url": "https://github.com/kz-95" },

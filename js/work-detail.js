@@ -17,10 +17,8 @@ document.addEventListener('dom:ready', function () {
   function getWorkData(id) {
     const d = window.__data;
     if (!d) return null;
-    if (d.works && d.works.items) {
-      const w = d.works.items.find(w => w.id === id);
-      if (w) return w;
-    }
+    const w = workGroup(id).find(w => w.id === id);
+    if (w) return w;
     /* featured case study (section 01) opens through the same overlay carousel */
     if (d.caseStudy && d.caseStudy.id === id) {
       const c = d.caseStudy;
@@ -39,6 +37,16 @@ document.addEventListener('dom:ready', function () {
     return null;
   }
 
+  /* the work list (Selected Works or AI Tooling) that holds this id */
+  function workGroup(id) {
+    const d = window.__data;
+    if (!d) return [];
+    for (const ws of [d.works, d.tooling]) {
+      if (ws && ws.items && ws.items.some(w => w.id === id)) return ws.items;
+    }
+    return [];
+  }
+
   function buildContent(w) {
     if (!w) return '';
     const hasGallery = w.gallery && w.gallery.length > 0;
@@ -55,9 +63,13 @@ document.addEventListener('dom:ready', function () {
            <div class="work-expanded__placeholder ${esc(w.thumbStyle)}"><span>${esc(w.thumbInitials)}</span></div>
          </div>`;
 
-    const liveBtn = w.liveUrl
-      ? `<a class="work-expanded__live" href="${esc(w.liveUrl)}" target="_blank" rel="noopener">Visit live site <span class="work-expanded__live-arrow" aria-hidden="true">\u2192</span></a>`
-      : '';
+    const linkBtn = (url, label) =>
+      `<a class="work-expanded__live" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)} <span class="work-expanded__live-arrow" aria-hidden="true">\u2192</span></a>`;
+    const links = [
+      w.liveUrl ? linkBtn(w.liveUrl, w.liveLabel || 'Visit live site') : '',
+      w.repoUrl ? linkBtn(w.repoUrl, 'View on GitHub') : ''
+    ].join('');
+    const liveBtn = links ? `<div class="work-expanded__links">${links}</div>` : '';
 
     return `
       <div class="work-expanded__header">
@@ -74,9 +86,7 @@ document.addEventListener('dom:ready', function () {
   }
 
   function buildOtherCards(currentId) {
-    const d = window.__data;
-    if (!d || !d.works || !d.works.items) return '';
-    const others = d.works.items.filter(w => w.id !== currentId);
+    const others = workGroup(currentId).filter(w => w.id !== currentId);
     if (!others.length) return '';
     return `<div class="work-expanded__others">
       ${others.map(w => {
@@ -305,6 +315,8 @@ document.addEventListener('dom:ready', function () {
          </figcaption>`
       : '';
 
+    /* "bg" paints the letterbox to match a composed slide's own edge colour */
+    const bgAttr = item && item.bg ? ` style="background:${esc(item.bg)}"` : '';
     let media;
     if (type === 'youtube') {
       const id = (item && item.id) || '';
@@ -313,13 +325,21 @@ document.addEventListener('dom:ready', function () {
                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
     } else if (type === 'video') {
       const poster = item && item.poster ? ` poster="${esc(item.poster)}"` : '';
-      media = `<video class="carousel__video" src="${esc(galSrc(item))}"${poster}
-                 controls playsinline preload="metadata"></video>`;
+      /* "loop": true plays a short silent clip like a gif (browsers pause
+         muted autoplay while it is off-screen); otherwise a normal player */
+      const playback = item && item.loop
+        ? 'muted loop autoplay playsinline'
+        : 'controls playsinline';
+      media = `<video class="carousel__video" src="${esc(galSrc(item))}"${poster}${bgAttr}
+                 ${playback} preload="metadata"></video>`;
     } else {
       /* NOT loading="lazy": the slides are built while the modal is still
          display:none, so a lazy image never becomes "visible" and is never
          fetched - the slide just renders as an empty box. */
-      media = `<img src="${esc(galSrc(item))}" alt="${esc(title)} preview" decoding="async">`;
+      /* "fit": "contain" keeps a composed 16:9 slide whole instead of the
+         top-anchored cover crop used for screenshots */
+      const fitAttr = item && item.fit === 'contain' ? ' class="is-contain"' : '';
+      media = `<img src="${esc(galSrc(item))}"${fitAttr}${bgAttr} alt="${esc(title)} preview" decoding="async">`;
     }
     return `<figure class="carousel__slide">${media}${capHTML}</figure>`;
   }

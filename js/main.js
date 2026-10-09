@@ -271,7 +271,7 @@ function initAll() {
         ringX(e.clientX); ringY(e.clientY);
       });
 
-      /* FIX #1: cursor label — VIEW for viewable (big ring), CLICK for clickable (smaller ring) */
+      /* FIX #1: cursor label: VIEW for viewable (big ring), CLICK for clickable (smaller ring) */
       document.querySelectorAll('[data-cursor]').forEach((el) => {
         el.addEventListener('pointerenter', () => {
           const kind = el.dataset.cursor;
@@ -294,7 +294,7 @@ function initAll() {
         });
       });
 
-      /* FIX #2: clickable items — smaller ring + CLICK label */
+      /* FIX #2: clickable items: smaller ring + CLICK label */
       document.querySelectorAll('a, button, .work-card').forEach((el) => {
         el.addEventListener('pointerenter', () => {
           cursor.classList.add('is-hover');
@@ -612,7 +612,7 @@ async function initArch(prefersReduced, isTouch) {
 
         col += (hash(uv * vec2(1840.0, 1200.0) + uTime) - 0.5) * 0.05;
 
-        /* iridescent rainbow blend at bottom — accent -> bg gradient */
+        /* iridescent rainbow blend at bottom: accent -> bg gradient */
         vec2 u = vec2((vUv.x * 2.0 - 1.0) * uAspect, vUv.y * 2.0 - 1.0);
         float a2 = 0.0, d2 = 0.0;
         for (float i = 0.0; i < 8.0; i++) {
